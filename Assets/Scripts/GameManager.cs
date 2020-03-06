@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour { 
 
@@ -10,12 +11,18 @@ public class GameManager : MonoBehaviour {
     public GameObject Naught;
     public GameObject Cross;
 
+    // TurnCounter
+    int turnCounter = 0;
+    public Text TurnText;
+
+    int player1 = 1;
+    int player2 = 2;
 
     // Squares tells us who owns which square in the game
     int[] squares = new int [9];
 
     // Turn tells us who's turn it is( 1= 0 2= x)
-    int Turn = 1;
+    int PlayerTurn = 1;
 
     //Contains winner naught = 1 / cross = 2 / draw = 3
     int Winner = 0;
@@ -23,22 +30,29 @@ public class GameManager : MonoBehaviour {
     //Contains amount of click on a square
     int ClickCount = 0;
 
-
-
+    public void Update()
+    {
+        SetTurnText();
+    }
+    
     public void SquareClicked(GameObject square)
     {
-
+        // adding a turn
+        turnCounter += 1;
+        SetTurnText();
         //Get the square number
         int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
 
+      
         //increase click count
         ClickCount += 1;
 
+        
         //Create the prefab for the click
         SpawnPrefab(square.transform.position);
 
         // make the player own the square
-        squares[SquareNumber] = Turn;
+        squares[SquareNumber] = PlayerTurn;
 
         //Check for a winner
         CheckForWinner();
@@ -51,7 +65,16 @@ public class GameManager : MonoBehaviour {
     }
 
 
+    void SetTurnText ()
+    {
 
+        // Text object equal to string and turnCounter
+
+        TurnText.text = "Turn: " + turnCounter.ToString();
+
+
+
+    }
 
     void CheckForWinner()
     {
@@ -136,7 +159,7 @@ public class GameManager : MonoBehaviour {
     void DisableSquares()
 
     {
-        // Desotry remaing squares
+        // Destory remaing squares
         foreach(ClickableSquare square in GameObject.FindObjectsOfType<ClickableSquare>())
         {
 
@@ -152,9 +175,9 @@ public class GameManager : MonoBehaviour {
         // So we can see it
         //postion.z = 0;
         //Check who's turn it is, then sqawn their prefab
-        if (Turn == 1)
+        if (PlayerTurn == 1)
             Instantiate(Naught, postion, Quaternion.identity);
-        else if (Turn == 2)
+        else if (PlayerTurn == 2)
             Instantiate(Cross, postion, Quaternion.identity);
 
     }
@@ -162,15 +185,29 @@ public class GameManager : MonoBehaviour {
     void NextTurn()
     {
         //Increase Turn
-        Turn += 1;
+        PlayerTurn += 1;
 
         //Check if Turn hit 3
 
-        if (Turn == 3)
-            Turn = 1;
+        if (PlayerTurn == 3)
+            PlayerTurn = 1;
 
     }
 
+    void PlacePlayerTotem()
+
+    {
+
+
+
+
+
+
+
+
+
+
+    }
     void OnGUI()
 
     {

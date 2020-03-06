@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 40ff5c73aa3d05b41ab28d478833f780
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FireTotem: {fileID: -927199367670048503, guid: cf6e8605895cffd479c292e80bf13984,
+      type: 3}
+  - WaterTotem: {fileID: -927199367670048503, guid: a8d73464f4c0e7349a0595851631a641,
+      type: 3}
+  - EarthTotem: {fileID: -927199367670048503, guid: a09a8fac4a8b7344996e1ae1d15bef51,
+      type: 3}
+  - AirTotem: {fileID: -927199367670048503, guid: 9cd757288202fdd4091e04b30776f9a6,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
