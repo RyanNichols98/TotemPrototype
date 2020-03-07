@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     // These are for Object Prefabs
     public GameObject Naught;
     public GameObject Cross;
-
+    
     // TurnCounter
     int turnCounter = 0;
     public Text TurnText;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
     public void SquareClicked(GameObject square)
     {
         // adding a turn
-        turnCounter += 1;
+        
         SetTurnText();
         //Get the square number
         int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    void NextTurn()
+    public void NextTurn()
     {
         //Increase Turn
         PlayerTurn += 1;
@@ -192,22 +192,9 @@ public class GameManager : MonoBehaviour {
         if (PlayerTurn == 3)
             PlayerTurn = 1;
 
+        turnCounter += 1;
     }
-
-    void PlacePlayerTotem()
-
-    {
-
-
-
-
-
-
-
-
-
-
-    }
+    
     void OnGUI()
 
     {
