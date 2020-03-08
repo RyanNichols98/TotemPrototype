@@ -244,9 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1182c65c91298534a8796546ea0b3dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleHUD: {fileID: 18287164}
+  rayLength: 100
+  layermask:
+    serializedVersion: 2
+    m_Bits: 1
   ActiveTotem: {fileID: 0}
-  player1plane: {fileID: 0}
-  player2plane: {fileID: 0}
+  EnemyTotem: {fileID: 0}
 --- !u!4 &43132152
 Transform:
   m_ObjectHideFlags: 0
@@ -488,7 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 396680668}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,6 +654,9 @@ MonoBehaviour:
   Naught: {fileID: 3928302425086169287, guid: 3760392a68f6bd94187ba49d8fc28819, type: 3}
   Cross: {fileID: 8062864787410801047, guid: 9e39950d294a6da4782b038a07551e17, type: 3}
   TurnText: {fileID: 446765829}
+  NextTurnText: {fileID: 1203923926}
+  P1_Icon: {fileID: 1490526007}
+  P2_Icon: {fileID: 1118041253}
   CombatText: {fileID: 1747602350}
 --- !u!4 &546850182 stripped
 Transform:
@@ -1538,7 +1545,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1001284947}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 43132151}
+        m_MethodName: OnAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1001284947
@@ -2669,7 +2687,7 @@ GameObject:
   - component: {fileID: 1887187282}
   - component: {fileID: 1887187281}
   - component: {fileID: 1887187280}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,80 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 
 
 public class BattleManager : MonoBehaviour
 {
+    public BattleHUD battleHUD;
 
-
+    public float rayLength;
+    public LayerMask layermask;
     public Totem[,] Totems { set; get;}
-    public GameObject ActiveTotem;
+    public Totem ActiveTotem;
+    public Totem EnemyTotem;
    
-    public Transform player1plane;
-    public Transform player2plane;
+    
 
     
 
 
     void Update()
     {
+      
         //ActiveTotem = totem.GetComponent<GameObject>();
-
-    }
-    void SelectObject(GameObject obj)
-    {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit rhInfo;
-                bool didHit = Physics.Raycast(toMouse, out rhInfo, 500.0f);
-                if (didHit)
-                {
-
-                    Debug.Log(rhInfo.collider.name);
-                    ActiveTotem = rhInfo.transform.root.gameObject;
-
-                    
-                }
-                else
-                {
-
-                    Debug.Log("Nothing");
-                }
-
-            }
-
-        if (ActiveTotem != null)
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-
-            if (obj == ActiveTotem)
+            Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rhInfo;
+            //bool didHit = Physics.Raycast(toMouse, out rhInfo, 500.0f);
+            if (Physics.Raycast(toMouse, out rhInfo,rayLength, layermask))
             {
-                return;
+
+                var Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
+                Debug.Log(rhInfo.collider.name);
+                ActiveTotem = Selectedtotem;
+                battleHUD.SetHUD(ActiveTotem);
+            }
+            else
+            {
                 ClearSelection();
+                Debug.Log("Nothing");
             }
-            ActiveTotem = obj;
-        }
-
-        Renderer[] rs = ActiveTotem.GetComponentsInChildren<Renderer>();
-        foreach (Renderer r in rs)
-        {
-
-
-            Material m = r.material;
-            m.color = Color.red;
-
 
         }
-
+       
 
     }
+    
 
 
     void ClearSelection()
     {
 
         ActiveTotem = null;
+    }
+    
+    public void OnAttackButton()
+    {
+
+        if(ActiveTotem.isCross = true)
+        {
+            ActiveTotem.totemCurrentHP = 1;
+            battleHUD.SetHUD(ActiveTotem);
+            return;
+            
+        }
+
     }
 
 }

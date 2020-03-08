@@ -4,11 +4,12 @@ using UnityEngine;
 using System;
 public class Totem : MonoBehaviour
 {
-    public int CurrentX{ set; get; }
-    public int CurrentY{ set; get; }
-    public bool isCross;
+   
+   
     //Totem element type
     public Element TotemElementType;
+
+    public Transform TotemTarget { get; set; }
 
     //Totem Stats
     public string totemName;
@@ -19,17 +20,15 @@ public class Totem : MonoBehaviour
     public int totemDefence;
     public int totemCritDamage;
 
-    public void SetPosition(int x, int y)
-    {
-
-        CurrentX = x;
-        CurrentY = y;
-
-    }
+    public bool isCross;
     void OnTotemSelect()
     {
+       
 
-        
+      GameObject.Find("Game Manager").SendMessage("TotemClicked", gameObject);
+            
+
+
     }
    
 

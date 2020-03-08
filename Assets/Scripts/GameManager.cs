@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, WON, LOST }
+public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, END }
 
 public class GameManager : MonoBehaviour {
 
@@ -31,8 +31,10 @@ public class GameManager : MonoBehaviour {
     // TurnCounter
     int turnCounter = 0;
     public Text TurnText;
+    public Text NextTurnText;
 
-
+    public Image P1_Icon;
+    public Image P2_Icon;
     //CombatLogText
     public Text CombatText;
     
@@ -50,21 +52,23 @@ public class GameManager : MonoBehaviour {
     int ClickCount = 0;
     void Start()
     {
-          
-
-           gameState = GameState.PLAYER_1_TURN;
+        //var choice = gameState = GameState.PLAYER_1_TURN;
+        P2_Icon.enabled = false;    
+        gameState = GameState.PLAYER_1_TURN;
     }
     public void Update()
     {
-
+    
         SetTurnText();
         //Check for a winner
-        CheckForWinner();
+       
        
     }
 
+   
 
-    
+
+ 
 
     public void SquareClicked(GameObject square)
     {
@@ -87,21 +91,22 @@ public class GameManager : MonoBehaviour {
         battleHUD.SetHUD(selectedTotem);
         // make the player own the square
         squares[SquareNumber] = PlayerTurn;
-        
+
+
+
         //Next player turn
-        NextTurn();
-        SetTurnText();
         NextTurnClicked();
+        CheckForWinner();
     }
 
     
     void SetTurnText ()
     {
+       
+            // Text object equal to string and turnCounter
 
-        // Text object equal to string and turnCounter
-
-        TurnText.text = "Turn: " + turnCounter.ToString();
-
+            TurnText.text = "Turn: " + turnCounter.ToString();
+        
 
 
     }
@@ -212,17 +217,17 @@ public class GameManager : MonoBehaviour {
         else if (totemElementType == Element.Water)
         {
             selectedTotem = WaterTotem;
-            Instantiate(WaterTotem, postion, Quaternion.identity);
+            Instantiate(selectedTotem, postion, Quaternion.identity);
         }
         else if (totemElementType == Element.Fire)
         {
             selectedTotem = FireTotem;
-            Instantiate(FireTotem, postion, Quaternion.identity);
+            Instantiate(selectedTotem, postion, Quaternion.identity);
         }
         else if (totemElementType == Element.Earth)
         {
             selectedTotem = EarthTotem;
-            Instantiate(EarthTotem, postion, Quaternion.identity);
+            Instantiate(selectedTotem, postion, Quaternion.identity);
         }
 
 
@@ -233,11 +238,17 @@ public class GameManager : MonoBehaviour {
         // So we can see it
         //postion.z = 0;
         //Check who's turn it is, then sqawn their prefab
-        if (PlayerTurn == 1)
+        if (gameState == GameState.PLAYER_1_TURN)
+            {
+            selectedTotem.isCross = true;
             Instantiate(Naught, postion, Quaternion.identity);
-        else if (PlayerTurn == 2)
-            Instantiate(Cross, postion, Quaternion.identity);
+            }
 
+        else if (gameState == GameState.PLAYER_2_TURN)
+            {
+            selectedTotem.isCross = false;
+            Instantiate(Cross, postion, Quaternion.identity);
+            }
     }
 
     public void NextTurn()
@@ -251,6 +262,7 @@ public class GameManager : MonoBehaviour {
             PlayerTurn = 1;
 
         turnCounter += 1;
+        SetTurnText();
     }
     
     void OnGUI()
@@ -263,9 +275,10 @@ public class GameManager : MonoBehaviour {
         {
 
             //Winner is naught
-            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 100, 50), "Naught is Winner!");
-
-
+            CombatText.text = "Naught is Winner!";
+            NextTurnText.text = "Restart";
+            P2_Icon.enabled = true;
+            P1_Icon.enabled = false;
         }
 
         else if (Winner == 2)
@@ -273,29 +286,27 @@ public class GameManager : MonoBehaviour {
         {
 
             //Winner is cross
-            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 100, 50), "Cross is Winner!");
-
-
+            CombatText.text = "Cross is Winner!";
+            NextTurnText.text = "Restart";
+            P2_Icon.enabled = false;
+            P1_Icon.enabled = true;
         }
 
         else if (Winner == 3)
         {
 
             //draw
-            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 100, 50), "It's a draw!");
-
+            CombatText.text = "It's a draw!";
+            NextTurnText.text = "Restart";
+            P2_Icon.enabled = false;
+            P1_Icon.enabled = false;
         }
 
         // Checkk if the game is over
         if (Winner != 0)
         {
-
-           if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 25, 100, 50), "Restart"))
-            {
-
-                SceneManager.LoadScene(0);
-
-            }
+            gameState = GameState.END;
+           
 
         }
 
@@ -305,15 +316,26 @@ public class GameManager : MonoBehaviour {
     }
     public void NextTurnClicked()
     {
+       
         if (gameState == GameState.PLAYER_1_TURN)
         {
+            NextTurn();
             gameState = GameState.PLAYER_2_TURN;
             CombatText.text = "Player Two Turn";
+            P1_Icon.enabled = false;
+            P2_Icon.enabled = true;
         }
         else if (gameState == GameState.PLAYER_2_TURN)
         {
+            NextTurn();
             gameState = GameState.PLAYER_1_TURN;
             CombatText.text = "Player One Turn";
+            P1_Icon.enabled = true;
+            P2_Icon.enabled = false;
+        }
+        else if (gameState == GameState.END)
+        {
+            SceneManager.LoadScene(0);
         }
 
 
