@@ -4,8 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour { 
+public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, WON, LOST }
 
+public class GameManager : MonoBehaviour {
+
+    //Game states
+    public GameState gameState;
+
+    //BattleHUD
+    public BattleHUD battleHUD;
+
+    //Prefabs for each Totem
+    public Totem WaterTotem;
+    public Totem AirTotem;
+    public Totem FireTotem;
+    public Totem EarthTotem;
+    public Totem selectedTotem;
+    public Totem[,] Totems { set; get; }
+    //Totem element type
+    Element totemElementType;
 
     // These are for Object Prefabs
     public GameObject Naught;
@@ -15,8 +32,10 @@ public class GameManager : MonoBehaviour {
     int turnCounter = 0;
     public Text TurnText;
 
-    int player1 = 1;
-    int player2 = 2;
+
+    //CombatLogText
+    public Text CombatText;
+    
 
     // Squares tells us who owns which square in the game
     int[] squares = new int [9];
@@ -29,17 +48,26 @@ public class GameManager : MonoBehaviour {
 
     //Contains amount of click on a square
     int ClickCount = 0;
+    void Start()
+    {
+          
 
+           gameState = GameState.PLAYER_1_TURN;
+    }
     public void Update()
     {
+
         SetTurnText();
+        //Check for a winner
+        CheckForWinner();
+       
     }
+
+
     
+
     public void SquareClicked(GameObject square)
     {
-        // adding a turn
-        
-        SetTurnText();
         //Get the square number
         int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
 
@@ -47,24 +75,26 @@ public class GameManager : MonoBehaviour {
         //increase click count
         ClickCount += 1;
 
-        
+        var ElementType = square.GetComponent<ClickableSquare>().PlaneType;
+
+        totemElementType = ElementType;
+
+        SpawnTotem(square.transform.position);
+
         //Create the prefab for the click
         SpawnPrefab(square.transform.position);
 
+        battleHUD.SetHUD(selectedTotem);
         // make the player own the square
         squares[SquareNumber] = PlayerTurn;
-
-        //Check for a winner
-        CheckForWinner();
-
-
+        
         //Next player turn
         NextTurn();
-
-       
+        SetTurnText();
+        NextTurnClicked();
     }
 
-
+    
     void SetTurnText ()
     {
 
@@ -76,6 +106,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
+   
     void CheckForWinner()
     {
 
@@ -169,6 +200,33 @@ public class GameManager : MonoBehaviour {
 
 
     }
+    void SpawnTotem(Vector3 postion)
+    {
+
+        if (totemElementType == Element.Air)
+        {
+            selectedTotem = AirTotem;
+            Instantiate(selectedTotem, postion, Quaternion.identity);
+            
+        }
+        else if (totemElementType == Element.Water)
+        {
+            selectedTotem = WaterTotem;
+            Instantiate(WaterTotem, postion, Quaternion.identity);
+        }
+        else if (totemElementType == Element.Fire)
+        {
+            selectedTotem = FireTotem;
+            Instantiate(FireTotem, postion, Quaternion.identity);
+        }
+        else if (totemElementType == Element.Earth)
+        {
+            selectedTotem = EarthTotem;
+            Instantiate(EarthTotem, postion, Quaternion.identity);
+        }
+
+
+    }
     void SpawnPrefab(Vector3 postion)
     {
 
@@ -186,7 +244,7 @@ public class GameManager : MonoBehaviour {
     {
         //Increase Turn
         PlayerTurn += 1;
-
+       
         //Check if Turn hit 3
 
         if (PlayerTurn == 3)
@@ -242,5 +300,23 @@ public class GameManager : MonoBehaviour {
         }
 
 
+
+
     }
+    public void NextTurnClicked()
+    {
+        if (gameState == GameState.PLAYER_1_TURN)
+        {
+            gameState = GameState.PLAYER_2_TURN;
+            CombatText.text = "Player Two Turn";
+        }
+        else if (gameState == GameState.PLAYER_2_TURN)
+        {
+            gameState = GameState.PLAYER_1_TURN;
+            CombatText.text = "Player One Turn";
+        }
+
+
+    }
+
 }

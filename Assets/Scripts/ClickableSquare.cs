@@ -13,9 +13,10 @@ public class ClickableSquare : MonoBehaviour
     {
        
         GameObject.Find("Game Manager").SendMessage("SquareClicked", gameObject);
-        GameObject.Find("Totem").SendMessage("PlaneClaimed", gameObject);
         Destroy(this);
         
+
+
     }
 
   
