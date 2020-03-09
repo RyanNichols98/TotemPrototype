@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum Element { Fire, Water, Earth, Air }
 
 public class ClickableSquare : MonoBehaviour

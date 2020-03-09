@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 465699fe58ada7a4d898a9e29a902bd7, type: 3}
+  - {fileID: 2100000, guid: 8f6561debf465b94b9a3cc25b68f6a93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,8 +97,10 @@ MonoBehaviour:
   totemMaxHP: 3
   totemCurrentHP: 3
   totemDamage: 2
+  totemCurrentDamage: 0
   totemDefence: 3
   totemCritDamage: 2
+  isCross: 0
 --- !u!136 &-4089822071467987931
 CapsuleCollider:
   m_ObjectHideFlags: 0

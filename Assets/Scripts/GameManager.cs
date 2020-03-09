@@ -61,8 +61,21 @@ public class GameManager : MonoBehaviour {
     
         SetTurnText();
         //Check for a winner
-       
-       
+        switch (gameState)
+        {
+            case GameState.START:
+                break;
+            case GameState.PLAYER_1_TURN:
+                SquareClicked(square);
+                break;
+            case GameState.PLAYER_2_TURN:
+                break;
+            case GameState.END:
+                break;
+            default:
+                break;
+        }
+
     }
 
    
@@ -74,8 +87,9 @@ public class GameManager : MonoBehaviour {
     {
         //Get the square number
         int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
+        
+        var Square = square.collider.gameObject.GetComponent<Totem>();
 
-      
         //increase click count
         ClickCount += 1;
 
@@ -207,7 +221,7 @@ public class GameManager : MonoBehaviour {
     }
     void SpawnTotem(Vector3 postion)
     {
-
+        
         if (totemElementType == Element.Air)
         {
             selectedTotem = AirTotem;
@@ -234,7 +248,7 @@ public class GameManager : MonoBehaviour {
     }
     void SpawnPrefab(Vector3 postion)
     {
-
+        postion.y = 30.0f;
         // So we can see it
         //postion.z = 0;
         //Check who's turn it is, then sqawn their prefab
