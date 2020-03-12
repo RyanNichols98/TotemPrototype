@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, END }
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //Game states
     public GameState gameState;
@@ -20,27 +21,33 @@ public class GameManager : MonoBehaviour {
     public Totem FireTotem;
     public Totem EarthTotem;
     public Totem selectedTotem;
-    public Totem[,] Totems { set; get; }
     //Totem element type
     Element totemElementType;
 
     // These are for Object Prefabs
     public GameObject Naught;
     public GameObject Cross;
-    
+    public bool isTotemPlaced = false;
+
+    public float rayLength;
+    public LayerMask layermask;
+    public Totem ActiveTotem;
+
     // TurnCounter
     int turnCounter = 0;
     public Text TurnText;
     public Text NextTurnText;
-
+    public Text CombatText;
     public Image P1_Icon;
     public Image P2_Icon;
+
     //CombatLogText
-    public Text CombatText;
-    
+
+
+
 
     // Squares tells us who owns which square in the game
-    int[] squares = new int [9];
+    int[] squares = new int[9];
 
     // Turn tells us who's turn it is( 1= 0 2= x)
     int PlayerTurn = 1;
@@ -53,85 +60,88 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         //var choice = gameState = GameState.PLAYER_1_TURN;
-        P2_Icon.enabled = false;    
-        gameState = GameState.PLAYER_1_TURN;
-    }
-    public void Update()
-    {
-    
-        SetTurnText();
-        //Check for a winner
+
         switch (gameState)
         {
             case GameState.START:
+                turnCounter = 1;
+                gameState = GameState.PLAYER_1_TURN;             
+                battleHUD.SetCombatText(gameState);
                 break;
-            case GameState.PLAYER_1_TURN:
-                SquareClicked(square);
-                break;
-            case GameState.PLAYER_2_TURN:
-                break;
-            case GameState.END:
-                break;
-            default:
-                break;
+
         }
 
     }
+    public void Update()
+    {
 
-   
+        SetTurnText();
+        //Check for a winner
+
+       
+    }
 
 
- 
+
+
+
 
     public void SquareClicked(GameObject square)
     {
-        //Get the square number
-        int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
-        
-        var Square = square.collider.gameObject.GetComponent<Totem>();
 
-        //increase click count
-        ClickCount += 1;
+        if (isTotemPlaced == false)
+        {
+            
+            //increase click count
+            ClickCount += 1;
+            //Get the square number
+            int SquareNumber = square.GetComponent<ClickableSquare>().SquareNumber;
 
-        var ElementType = square.GetComponent<ClickableSquare>().PlaneType;
+            var Square = square.GetComponent<ClickableSquare>().gameObject;
 
-        totemElementType = ElementType;
+            var ElementType = square.GetComponent<ClickableSquare>().PlaneType;
 
-        SpawnTotem(square.transform.position);
+            square.GetComponent<ClickableSquare>().IsPlaneOcc = true;
+            // squares[SquareNumber] = 0;
+            // make the player own the square
+            squares[SquareNumber] = PlayerTurn;
 
-        //Create the prefab for the click
-        SpawnPrefab(square.transform.position);
+            totemElementType = ElementType;
 
-        battleHUD.SetHUD(selectedTotem);
-        // make the player own the square
-        squares[SquareNumber] = PlayerTurn;
+            //spawn totem
+            SpawnTotem(square.transform.position);
+            selectedTotem.totemsquarenumber = SquareNumber;
+            battleHUD.SetHUD(selectedTotem);
+           
+            CheckForWinner();
+
+            //Next player turn
+           
+
+        }
 
 
-
-        //Next player turn
-        NextTurnClicked();
-        CheckForWinner();
     }
 
-    
-    void SetTurnText ()
+
+    void SetTurnText()
     {
-       
-            // Text object equal to string and turnCounter
 
-            TurnText.text = "Turn: " + turnCounter.ToString();
-        
+        // Text object equal to string and turnCounter
+
+        TurnText.text = "Turn: " + turnCounter.ToString();
+
 
 
     }
 
-   
+
     void CheckForWinner()
     {
 
         for (int player = 1; player <= 2; player++)
         {
-
+            
             // First Row
             if (squares[0] == player && squares[1] == player & squares[2] == player)
             {
@@ -195,22 +205,36 @@ public class GameManager : MonoBehaviour {
                 Winner = player;
             }
 
+            
+
         }
 
-
-        // check for a draw
         if (ClickCount == 9 && Winner == 0)
         {
+
             Winner = 3;
+
+
         }
     }
 
+    public void EnableSquare()
+    {
+
+        
+
+        
+
+
+
+
+    }
 
     void DisableSquares()
 
     {
         // Destory remaing squares
-        foreach(ClickableSquare square in GameObject.FindObjectsOfType<ClickableSquare>())
+        foreach (ClickableSquare square in GameObject.FindObjectsOfType<ClickableSquare>())
         {
 
             Destroy(square);
@@ -221,64 +245,72 @@ public class GameManager : MonoBehaviour {
     }
     void SpawnTotem(Vector3 postion)
     {
-        
-        if (totemElementType == Element.Air)
+      
+       
+
+        // selectedTotem.isTotemOcc = true;
+        switch (totemElementType)
         {
-            selectedTotem = AirTotem;
-            Instantiate(selectedTotem, postion, Quaternion.identity);
-            
-        }
-        else if (totemElementType == Element.Water)
-        {
-            selectedTotem = WaterTotem;
-            Instantiate(selectedTotem, postion, Quaternion.identity);
-        }
-        else if (totemElementType == Element.Fire)
-        {
-            selectedTotem = FireTotem;
-            Instantiate(selectedTotem, postion, Quaternion.identity);
-        }
-        else if (totemElementType == Element.Earth)
-        {
-            selectedTotem = EarthTotem;
-            Instantiate(selectedTotem, postion, Quaternion.identity);
+            case Element.Fire:
+                selectedTotem = FireTotem;
+                Instantiate(selectedTotem, postion, Quaternion.identity);
+                break;
+            case Element.Water:
+                selectedTotem = WaterTotem;
+                Totem totem = Instantiate(selectedTotem, postion, Quaternion.identity);
+                break;
+            case Element.Earth:
+                selectedTotem = EarthTotem;
+                Instantiate(selectedTotem, postion, Quaternion.identity);
+                break;
+            case Element.Air:
+                selectedTotem = AirTotem;
+                Instantiate(selectedTotem, postion, Quaternion.identity);
+                break;
+            default:
+                break;
         }
 
+        postion.y = 35.0f;
 
+        switch (gameState)
+        {
+
+            case GameState.PLAYER_1_TURN:
+                selectedTotem.isCross = false;
+                Instantiate(Naught, postion, Quaternion.identity);
+                break;
+            case GameState.PLAYER_2_TURN:
+                selectedTotem.isCross = true;
+                Instantiate(Cross, postion, Quaternion.identity);
+                break;
+
+        }
+        isTotemPlaced = true;
     }
-    void SpawnPrefab(Vector3 postion)
-    {
-        postion.y = 30.0f;
-        // So we can see it
-        //postion.z = 0;
-        //Check who's turn it is, then sqawn their prefab
-        if (gameState == GameState.PLAYER_1_TURN)
-            {
-            selectedTotem.isCross = true;
-            Instantiate(Naught, postion, Quaternion.identity);
-            }
-
-        else if (gameState == GameState.PLAYER_2_TURN)
-            {
-            selectedTotem.isCross = false;
-            Instantiate(Cross, postion, Quaternion.identity);
-            }
-    }
+   
 
     public void NextTurn()
     {
-        //Increase Turn
-        PlayerTurn += 1;
-       
-        //Check if Turn hit 3
+        
+        switch (gameState)
+        {
+            
+            case GameState.PLAYER_1_TURN:
+                PlayerTurn = 1;
+                break;
+            case GameState.PLAYER_2_TURN:
+                PlayerTurn = 2;
+                break;
+         
+        }
 
-        if (PlayerTurn == 3)
-            PlayerTurn = 1;
-
+        
         turnCounter += 1;
         SetTurnText();
+
     }
-    
+
     void OnGUI()
 
     {
@@ -287,72 +319,63 @@ public class GameManager : MonoBehaviour {
         if (Winner == 1)
 
         {
-
+            gameState = GameState.END;
             //Winner is naught
             CombatText.text = "Naught is Winner!";
             NextTurnText.text = "Restart";
-            P2_Icon.enabled = true;
-            P1_Icon.enabled = false;
+            P2_Icon.enabled = false;
+            P1_Icon.enabled = true;
         }
 
         else if (Winner == 2)
 
         {
-
+            gameState = GameState.END;
             //Winner is cross
             CombatText.text = "Cross is Winner!";
             NextTurnText.text = "Restart";
-            P2_Icon.enabled = false;
-            P1_Icon.enabled = true;
+            P2_Icon.enabled = true;
+            P1_Icon.enabled = false;
         }
 
         else if (Winner == 3)
         {
-
-            //draw
-            CombatText.text = "It's a draw!";
+            gameState = GameState.END;
+            //Winner is cross
+            CombatText.text = "Draw";
             NextTurnText.text = "Restart";
             P2_Icon.enabled = false;
             P1_Icon.enabled = false;
         }
-
-        // Checkk if the game is over
-        if (Winner != 0)
-        {
-            gameState = GameState.END;
-           
-
-        }
-
-
 
 
     }
     public void NextTurnClicked()
     {
-       
-        if (gameState == GameState.PLAYER_1_TURN)
-        {
-            NextTurn();
-            gameState = GameState.PLAYER_2_TURN;
-            CombatText.text = "Player Two Turn";
-            P1_Icon.enabled = false;
-            P2_Icon.enabled = true;
-        }
-        else if (gameState == GameState.PLAYER_2_TURN)
-        {
-            NextTurn();
-            gameState = GameState.PLAYER_1_TURN;
-            CombatText.text = "Player One Turn";
-            P1_Icon.enabled = true;
-            P2_Icon.enabled = false;
-        }
-        else if (gameState == GameState.END)
-        {
-            SceneManager.LoadScene(0);
-        }
 
+        switch (gameState)
+        {
+            
+            case GameState.START:
+                break;
+            case GameState.PLAYER_1_TURN:               
+                gameState = GameState.PLAYER_2_TURN;     
+                break;
+            case GameState.PLAYER_2_TURN:
+                gameState = GameState.PLAYER_1_TURN;                            
+                break;
+            case GameState.END:
+                SceneManager.LoadScene(0);
+                break;
+            default:
+                break;
+        }
+        isTotemPlaced = false;
+        battleHUD.SetCombatText(gameState);
+        NextTurn();
 
     }
-
 }
+
+
+    

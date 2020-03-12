@@ -9,17 +9,28 @@ public class ClickableSquare : MonoBehaviour
 {
     public Element PlaneType;
     public int SquareNumber = 0;
+    public bool IsPlaneOcc = false;
     
     void OnMouseDown()
     {
-       
-        GameObject.Find("Game Manager").SendMessage("SquareClicked", gameObject);
-        Destroy(this);
-        
+
+        if (IsPlaneOcc == false)
+        {
+
+            GameObject.Find("Game Manager").SendMessage("SquareClicked", gameObject);
+            
+        }
+
+        if (IsPlaneOcc == true)
+        {
+            return;
+        }
+
+
 
 
     }
 
-  
+
 
 }

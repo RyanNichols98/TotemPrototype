@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireTotem : Totem
 {
+    new Element TotemElementType = Element.Fire; 
     // Start is called before the first frame update
     void Start()
     {
