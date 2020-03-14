@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7142131360906271168}
   - component: {fileID: 2181699482535715830}
   - component: {fileID: 5582912631892221711}
-  - component: {fileID: 3999054318203125237}
+  - component: {fileID: 5489650799846240867}
   m_Layer: 0
   m_Name: Cross
   m_TagString: XorO
@@ -79,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3999054318203125237
+--- !u!114 &5489650799846240867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,6 +88,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6144787278820027347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87691c67b17f7e478164b70ba84ce96, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e22ee7f32ab09f4ea3036ac387d6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

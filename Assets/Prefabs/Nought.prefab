@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5394915861936030434}
   - component: {fileID: 4000764215938676948}
   - component: {fileID: 7257859422130897965}
-  - component: {fileID: 7885617982463388112}
+  - component: {fileID: 3221451021280400250}
   m_Layer: 0
   m_Name: Nought
   m_TagString: XorO
@@ -79,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &7885617982463388112
+--- !u!114 &3221451021280400250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,6 +88,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8972805141472719089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87691c67b17f7e478164b70ba84ce96, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e22ee7f32ab09f4ea3036ac387d6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

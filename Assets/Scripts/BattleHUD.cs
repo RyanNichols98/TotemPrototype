@@ -104,7 +104,7 @@ public class BattleHUD : MonoBehaviour
         hpSlider.maxValue = totem.totemMaxHP;
         hpSlider.value = totem.totemCurrentHP;
         DmgText.text = totem.totemDamage.ToString();
-        DefText.text = totem.totemDefence.ToString();
+        DefText.text = totem.totemCurrentDefence.ToString();
         AtkButton.enabled = false;
         DefButton.enabled = false;
   

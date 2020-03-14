@@ -244,26 +244,22 @@ public class GameManager : MonoBehaviour
             case Element.Fire:
                 selectedTotem = FireTotem;
                 selectedTotem.totemIs = TotemIs;
-                Instantiate(selectedTotem, postion, Quaternion.identity);
-                selectedTotem.TotemIs(gameState, postion);
+                Instantiate(selectedTotem, postion, Quaternion.identity);          
                 break;
             case Element.Water:
                 selectedTotem = WaterTotem;
                 selectedTotem.totemIs = TotemIs;
-                Instantiate(selectedTotem, postion, Quaternion.identity);
-                selectedTotem.TotemIs(gameState, postion);
+                Instantiate(selectedTotem, postion, Quaternion.identity);              
                 break;
             case Element.Earth:
                 selectedTotem = EarthTotem;
                 selectedTotem.totemIs = TotemIs;
-                Instantiate(selectedTotem, postion, Quaternion.identity);
-                selectedTotem.TotemIs(gameState, postion);
+                Instantiate(selectedTotem, postion, Quaternion.identity);               
                 break;
             case Element.Air:
                 selectedTotem = AirTotem;
                 selectedTotem.totemIs = TotemIs;
                 Instantiate(selectedTotem, postion, Quaternion.identity);
-                selectedTotem.TotemIs(gameState, postion);
                 break;
             default:
                 break;

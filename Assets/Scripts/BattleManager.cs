@@ -163,7 +163,7 @@ public class BattleManager : MonoBehaviour
                     }
                     break;
                 case Element.Earth:
-                    if (Enetotemelementtype == Element.Fire)
+                    if (Enetotemelementtype == Element.Water)
                     {
 
                         EnemyTotem.TakeCritDamage();
@@ -222,7 +222,7 @@ public class BattleManager : MonoBehaviour
         }
         else
             return;
-
+       
     }
 
    

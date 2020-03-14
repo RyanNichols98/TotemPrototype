@@ -23,18 +23,31 @@ public class Totem : MonoBehaviour
     public bool isTotemOcc = false;
     public ClickableSquare totemsquarenumber;
     public bool hasAttack;
-    public GameObject XorOPrefab = null;
-    public GameObject X;
-    public GameObject O;
+   
 
     public WhatisTotem totemIs; 
    
-    void OnTotemSelect()
+   void Update()
     {
-      GameObject.Find("Game Manager").SendMessage("TotemClicked", gameObject);
-   
+
+
+        SetTotemHealth();
+
     }
    
+
+    void SetTotemHealth()
+    {    
+
+        if (totemCurrentHP <= 0)
+        {
+            DestoryTotem();
+        }
+
+        else
+            return;
+
+    }
    public void TakeDamage(Totem totem)
     {
         totemCurrentHP += totemCurrentDefence;
@@ -70,7 +83,7 @@ public class Totem : MonoBehaviour
 
    
 
-   public  void TotemDefend()
+   public void TotemDefend()
     {
         if (isDefending == false)
         {
@@ -83,32 +96,10 @@ public class Totem : MonoBehaviour
 
     }
 
-    public void TotemIs(GameState gameState, Vector3 postion)
-    {
-        postion.y = 35.0f;
-        
-        switch (gameState)
-        {
-            case GameState.PLAYER_1_TURN:
-                XorOPrefab = O;
-                GameObject.Instantiate(XorOPrefab, postion, Quaternion.identity);
-                
-                break;
-            case GameState.PLAYER_2_TURN:
-               XorOPrefab = X;
-                GameObject.Instantiate(XorOPrefab, postion, Quaternion.identity);
-
-                break;
-
-        }
-
-
-
-    }
+  
     public void DestoryTotem()
-    {   
-        totemsquarenumber.EnableSquare();
-        Destroy(GameObject.FindWithTag("XorO"));
+    {
+        totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
         Destroy(gameObject);
     }
     
