@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 611170527249445450}
   - component: {fileID: 6577464582878514867}
   - component: {fileID: -6310945955074043329}
-  - component: {fileID: 6011231851712795472}
-  m_Layer: 0
+  - component: {fileID: 6326401891841019721}
+  m_Layer: 9
   m_Name: Air Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,9 +100,17 @@ MonoBehaviour:
   totemCurrentDamage: 0
   totemDefence: 3
   totemCritDamage: 2
-  isCross: 0
---- !u!136 &6011231851712795472
-CapsuleCollider:
+  isDefending: 0
+  isTotemOcc: 0
+  totemsquarenumber: {fileID: 0}
+  hasAttack: 0
+  XorOPrefab: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c,
+    type: 3}
+  X: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c, type: 3}
+  O: {fileID: 8972805141472719089, guid: a8e633c7b4610904f9ad2d154292d79a, type: 3}
+  totemIs: 0
+--- !u!65 &6326401891841019721
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -111,7 +119,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 350
-  m_Height: 1850.4
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 738, y: 2000, z: 733.7}
   m_Center: {x: 0, y: 615.39844, z: 0}

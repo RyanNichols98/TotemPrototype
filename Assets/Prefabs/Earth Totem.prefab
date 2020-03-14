@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1997766350212582855}
   - component: {fileID: 5225851783903818046}
   - component: {fileID: 2473187284621741854}
-  - component: {fileID: -1104202709684530940}
-  m_Layer: 0
+  - component: {fileID: -244462938000853364}
+  m_Layer: 9
   m_Name: Earth Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,9 +100,16 @@ MonoBehaviour:
   totemCurrentDamage: 0
   totemDefence: 3
   totemCritDamage: 2
-  isCross: 0
---- !u!136 &-1104202709684530940
-CapsuleCollider:
+  isDefending: 0
+  isTotemOcc: 0
+  totemsquarenumber: {fileID: 0}
+  hasAttack: 0
+  XorOPrefab: {fileID: 0}
+  X: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c, type: 3}
+  O: {fileID: 8972805141472719089, guid: a8e633c7b4610904f9ad2d154292d79a, type: 3}
+  totemIs: 1
+--- !u!65 &-244462938000853364
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -111,7 +118,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 463.04388
-  m_Height: 2007
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 675.4502, y: 1113.5287, z: 926.08777}
   m_Center: {x: -6.6432343, y: 544.73016, z: 3.6440887}

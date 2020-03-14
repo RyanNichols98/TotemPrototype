@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5080116290914161643}
   - component: {fileID: 1566333146102165266}
   - component: {fileID: 5010504696594690772}
-  - component: {fileID: -4089822071467987931}
-  m_Layer: 0
+  - component: {fileID: 7253107912470725986}
+  m_Layer: 9
   m_Name: Water Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,9 +100,16 @@ MonoBehaviour:
   totemCurrentDamage: 0
   totemDefence: 3
   totemCritDamage: 2
-  isCross: 0
---- !u!136 &-4089822071467987931
-CapsuleCollider:
+  isDefending: 0
+  isTotemOcc: 0
+  totemsquarenumber: {fileID: 0}
+  hasAttack: 0
+  XorOPrefab: {fileID: 0}
+  X: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c, type: 3}
+  O: {fileID: 8972805141472719089, guid: a8e633c7b4610904f9ad2d154292d79a, type: 3}
+  totemIs: 1
+--- !u!65 &7253107912470725986
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -111,7 +118,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 360.12
-  m_Height: 1660.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 354.68268, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1144.7, y: 1150.2, z: 1268}
+  m_Center: {x: 0, y: 571.36, z: 0}

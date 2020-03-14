@@ -30,7 +30,17 @@ public class ClickableSquare : MonoBehaviour
 
 
     }
+    public void EnableSquare()
+    {
+        Debug.Log(SquareNumber + " is claimable");
 
+        IsPlaneOcc = false;
+
+
+
+
+
+    }
 
 
 }

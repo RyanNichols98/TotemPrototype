@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour
 
     //Game states
     public GameState gameState;
+    //Battle Manager
+    public BattleManager MainBattleManger;
 
-    //BattleHUD
-    public BattleHUD battleHUD;
+    public WhatisTotem TotemIs;
 
     //Prefabs for each Totem
     public Totem WaterTotem;
@@ -25,15 +26,16 @@ public class GameManager : MonoBehaviour
     Element totemElementType;
 
     // These are for Object Prefabs
-    public GameObject Naught;
-    public GameObject Cross;
+    
     public bool isTotemPlaced = false;
 
     public float rayLength;
     public LayerMask layermask;
-    public Totem ActiveTotem;
+
 
     // TurnCounter
+
+    //CombatLogText
     int turnCounter = 0;
     public Text TurnText;
     public Text NextTurnText;
@@ -41,8 +43,8 @@ public class GameManager : MonoBehaviour
     public Image P1_Icon;
     public Image P2_Icon;
 
-    //CombatLogText
-
+    //BattleHUD
+    public BattleHUD battleHUD;
 
 
 
@@ -61,15 +63,12 @@ public class GameManager : MonoBehaviour
     {
         //var choice = gameState = GameState.PLAYER_1_TURN;
 
-        switch (gameState)
-        {
-            case GameState.START:
+        
                 turnCounter = 1;
                 gameState = GameState.PLAYER_1_TURN;             
                 battleHUD.SetCombatText(gameState);
-                break;
-
-        }
+                TotemIs = WhatisTotem.O;
+        
 
     }
     public void Update()
@@ -91,7 +90,7 @@ public class GameManager : MonoBehaviour
 
         if (isTotemPlaced == false)
         {
-            
+            MainBattleManger.ClearSelection();
             //increase click count
             ClickCount += 1;
             //Get the square number
@@ -102,15 +101,17 @@ public class GameManager : MonoBehaviour
             var ElementType = square.GetComponent<ClickableSquare>().PlaneType;
 
             square.GetComponent<ClickableSquare>().IsPlaneOcc = true;
-            // squares[SquareNumber] = 0;
-            // make the player own the square
             squares[SquareNumber] = PlayerTurn;
 
             totemElementType = ElementType;
 
             //spawn totem
             SpawnTotem(square.transform.position);
-            selectedTotem.totemsquarenumber = SquareNumber;
+            
+            // make the player own the square
+            
+            selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
+            
             battleHUD.SetHUD(selectedTotem);
            
             CheckForWinner();
@@ -218,17 +219,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EnableSquare()
-    {
-
-        
-
-        
-
-
-
-
-    }
+  
 
     void DisableSquares()
 
@@ -245,47 +236,41 @@ public class GameManager : MonoBehaviour
     }
     void SpawnTotem(Vector3 postion)
     {
-      
-       
+     
 
         // selectedTotem.isTotemOcc = true;
         switch (totemElementType)
         {
             case Element.Fire:
                 selectedTotem = FireTotem;
+                selectedTotem.totemIs = TotemIs;
                 Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.TotemIs(gameState, postion);
                 break;
             case Element.Water:
                 selectedTotem = WaterTotem;
-                Totem totem = Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.totemIs = TotemIs;
+                Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.TotemIs(gameState, postion);
                 break;
             case Element.Earth:
                 selectedTotem = EarthTotem;
+                selectedTotem.totemIs = TotemIs;
                 Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.TotemIs(gameState, postion);
                 break;
             case Element.Air:
                 selectedTotem = AirTotem;
+                selectedTotem.totemIs = TotemIs;
                 Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.TotemIs(gameState, postion);
                 break;
             default:
                 break;
         }
 
-        postion.y = 35.0f;
-
-        switch (gameState)
-        {
-
-            case GameState.PLAYER_1_TURN:
-                selectedTotem.isCross = false;
-                Instantiate(Naught, postion, Quaternion.identity);
-                break;
-            case GameState.PLAYER_2_TURN:
-                selectedTotem.isCross = true;
-                Instantiate(Cross, postion, Quaternion.identity);
-                break;
-
-        }
+       
+        
         isTotemPlaced = true;
     }
    
@@ -298,9 +283,11 @@ public class GameManager : MonoBehaviour
             
             case GameState.PLAYER_1_TURN:
                 PlayerTurn = 1;
+                TotemIs = WhatisTotem.O;
                 break;
             case GameState.PLAYER_2_TURN:
                 PlayerTurn = 2;
+                TotemIs = WhatisTotem.X;
                 break;
          
         }
@@ -356,10 +343,8 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             
-            case GameState.START:
-                break;
             case GameState.PLAYER_1_TURN:               
-                gameState = GameState.PLAYER_2_TURN;     
+                gameState = GameState.PLAYER_2_TURN; 
                 break;
             case GameState.PLAYER_2_TURN:
                 gameState = GameState.PLAYER_1_TURN;                            
@@ -367,12 +352,13 @@ public class GameManager : MonoBehaviour
             case GameState.END:
                 SceneManager.LoadScene(0);
                 break;
-            default:
-                break;
+          
         }
+        MainBattleManger.setGameState();
         isTotemPlaced = false;
         battleHUD.SetCombatText(gameState);
         NextTurn();
+        MainBattleManger.ClearSelection();
 
     }
 }

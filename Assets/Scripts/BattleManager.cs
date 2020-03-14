@@ -16,18 +16,21 @@ public class BattleManager : MonoBehaviour
     public Totem ActiveTotem;
     public Totem EnemyTotem;
     public GameState BattleGameState;
+    public GameManager MainGameManager;
+    Element Acttotemelementtype;
+    Element Enetotemelementtype;
+    public bool hasAttacked = false;
 
 
 
 
-
-    void setGameState()
+    public void setGameState()
     {
 
+        BattleGameState = MainGameManager.gameState;
+        hasAttacked = false;
 
-
-
-
+        ClearSelection();
 
 
     }
@@ -35,42 +38,21 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
 
-        setGameState();
+        
+        Selection();
+        
 
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            
-            Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rhInfo;
-            //bool didHit = Physics.Raycast(toMouse, out rhInfo, 500.0f);
-            if (Physics.Raycast(toMouse, out rhInfo, rayLength, layermask))
-            {
-
-                var Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
-                Debug.Log(rhInfo.collider.name);
-                ActiveTotem = Selectedtotem;
-                battleHUD.SetHUD(ActiveTotem);
-
-            }
-            else
-            {
-                ClearSelection();
-                Debug.Log("Nothing");
-            }
-
-        }
-
-       
 
 
     }
 
-    void Selection()
+    public void Selection()
     {
+      
+    
 
-
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
            
             Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit rhInfo;
@@ -80,8 +62,51 @@ public class BattleManager : MonoBehaviour
 
                 var Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
                 Debug.Log(rhInfo.collider.name);
-                ActiveTotem = Selectedtotem;
+                switch (BattleGameState)
+                {
+
+                    case GameState.PLAYER_1_TURN:
+                        switch (Selectedtotem.totemIs)
+                        {
+                            case WhatisTotem.O:
+                                ActiveTotem = Selectedtotem;
+                                battleHUD.SetHUD(ActiveTotem);
+                                break;
+                            case WhatisTotem.X:
+                                EnemyTotem = Selectedtotem;
+                                battleHUD.SetEnemyHUD(EnemyTotem);
+                                break;
+                          
+                               
+                            default:
+                                break;
+                        }
+                      
+                        break;
+                    case GameState.PLAYER_2_TURN:
+                        switch (Selectedtotem.totemIs)
+                        {
+                            case WhatisTotem.X:
+                                ActiveTotem = Selectedtotem;
+                                battleHUD.SetHUD(ActiveTotem);
+                                break;
+                            case WhatisTotem.O:
+                                EnemyTotem = Selectedtotem;
+                                battleHUD.SetEnemyHUD(EnemyTotem);
+                                break;
+                            default:
+                                break;
+                        }
+                      
+                     
+                        break;
+
+
+                }
+               
+
             }
+
             else
             {
                 ClearSelection();
@@ -90,73 +115,92 @@ public class BattleManager : MonoBehaviour
 
         }
 
-        battleHUD.SetHUD(ActiveTotem);
-
-
-
-
-
-    }
-    void CurrentGameState()
-    {
+        
 
 
 
 
     }
 
-    void ClearSelection()
-    {
 
+
+    public void ClearSelection()
+    {
+        EnemyTotem = null;
         ActiveTotem = null;
     }
     
     public void OnAttackButton()
     {
-        switch (BattleGameState)
+        if (hasAttacked == false)
         {
-            
-            case GameState.PLAYER_1_TURN:
-                if (ActiveTotem.isCross == true)
-                {
-                    EnemyTotem.TakeDamage();
-                    battleHUD.SetHUD(EnemyTotem);
-                    if (EnemyTotem.totemCurrentHP <= 0)
-                        Destroy(EnemyTotem.gameObject);
+            Acttotemelementtype = ActiveTotem.TotemElementType;
+            Enetotemelementtype = EnemyTotem.TotemElementType;
+            switch (Acttotemelementtype)
+            {
+                case Element.Fire:
+                    if(Enetotemelementtype == Element.Earth)
+                    {
 
+                        EnemyTotem.TakeCritDamage();
+
+                    }
                     else
-                        battleHUD.SetHUD(EnemyTotem);
-                    return;
-
-
-
-                }
-                else
-                break;
-            case GameState.PLAYER_2_TURN:
-                if (ActiveTotem.isCross == false)
-                {
-                    EnemyTotem.TakeDamage();
-                    battleHUD.SetHUD(EnemyTotem);
-                    if (EnemyTotem.totemCurrentHP <= 0)
-                        Destroy(EnemyTotem.gameObject);
-
-                    else
-                        battleHUD.SetHUD(EnemyTotem);
-                    return;
-
-
-
-                }
-                else
+                    {
+                        EnemyTotem.TakeDamage(ActiveTotem);
+                    }
                     break;
+                case Element.Water:
+                    if (Enetotemelementtype == Element.Fire)
+                    {
+
+                        EnemyTotem.TakeCritDamage();
+
+                    }
+                    else
+                    {
+                        EnemyTotem.TakeDamage(ActiveTotem);
+                    }
+                    break;
+                case Element.Earth:
+                    if (Enetotemelementtype == Element.Fire)
+                    {
+
+                        EnemyTotem.TakeCritDamage();
+
+                    }
+                    else
+                    {
+                        EnemyTotem.TakeDamage(ActiveTotem);
+                    }
+                    break;
+                case Element.Air:
+                    if (Enetotemelementtype == Element.Air)
+                    {
+
+                        EnemyTotem.TakeCritDamage();
+
+                    }
+                    else
+                    {
+                        EnemyTotem.TakeDamage(ActiveTotem);
+                    }
+                    break;
+                default:
+                    break;
+            }
            
+            battleHUD.SetEnemyHUD(EnemyTotem);
+            hasAttacked = true;           
         }
-        
+       
 
-        
+        else
+        {
 
-
+            return;
+        }
+       
     }
 
     public void OnDefendButton()
@@ -181,15 +225,7 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public void SendMessage()
-    {
-
-
-        GameObject.Find("Game Manager").SendMessage("EnableSquare", gameObject);
-
-
-
-    }
+   
 }
 
 
