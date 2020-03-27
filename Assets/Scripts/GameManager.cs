@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public float rayLength;
     public LayerMask layermask;
 
-
+    
     // TurnCounter
 
     //CombatLogText
@@ -88,7 +88,9 @@ public class GameManager : MonoBehaviour
     public void SquareClicked(GameObject square)
     {
 
-        if (isTotemPlaced == false)
+       bool isplaneocc = square.GetComponent<ClickableSquare>().IsPlaneOcc;
+
+        if (isplaneocc == false && isTotemPlaced == false)
         {
             MainBattleManger.ClearSelection();
             //increase click count
@@ -107,9 +109,9 @@ public class GameManager : MonoBehaviour
 
             //spawn totem
             SpawnTotem(square.transform.position);
-            
+           
             // make the player own the square
-            
+
             selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
             
             battleHUD.SetHUD(selectedTotem);
@@ -244,7 +246,7 @@ public class GameManager : MonoBehaviour
             case Element.Fire:
                 selectedTotem = FireTotem;
                 selectedTotem.totemIs = TotemIs;
-                Instantiate(selectedTotem, postion, Quaternion.identity);          
+                Instantiate(selectedTotem, postion, Quaternion.identity);         
                 break;
             case Element.Water:
                 selectedTotem = WaterTotem;
@@ -280,6 +282,7 @@ public class GameManager : MonoBehaviour
             case GameState.PLAYER_1_TURN:
                 PlayerTurn = 1;
                 TotemIs = WhatisTotem.O;
+
                 break;
             case GameState.PLAYER_2_TURN:
                 PlayerTurn = 2;

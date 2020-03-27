@@ -27,6 +27,7 @@ public class BattleHUD : MonoBehaviour
     public Button AtkButton;
     public Button DefButton;
 
+    
 
     GameState GameState;
 
@@ -40,7 +41,7 @@ public class BattleHUD : MonoBehaviour
         hpSlider.value = totem.totemCurrentHP;
         DmgText.text = totem.totemDamage.ToString();
         DefText.text = totem.totemCurrentDefence.ToString();
-        AtkButton.enabled = true;
+        AtkButton.enabled = false;
         DefButton.enabled = true;
         switch (totem.TotemElementType)
         {
@@ -98,17 +99,17 @@ public class BattleHUD : MonoBehaviour
        
     }
 
-    public void SetEnemyHUD(Totem totem)
+    public void SetEnemyHUD(Totem Enetotem, Totem Acttotem)
     {
-        totemName.text = totem.totemName;
-        hpSlider.maxValue = totem.totemMaxHP;
-        hpSlider.value = totem.totemCurrentHP;
-        DmgText.text = totem.totemDamage.ToString();
-        DefText.text = totem.totemCurrentDefence.ToString();
-        AtkButton.enabled = false;
+        totemName.text = Enetotem.totemName;
+        hpSlider.maxValue = Enetotem.totemMaxHP;
+        hpSlider.value = Enetotem.totemCurrentHP;
+        DmgText.text = Acttotem.totemDamage.ToString();
+        DefText.text = Enetotem.totemCurrentDefence.ToString();
+        AtkButton.enabled = true;
         DefButton.enabled = false;
   
-        switch (totem.TotemElementType)
+        switch (Enetotem.TotemElementType)
         {
             case Element.Fire:
                 EarthPanel.enabled = false;
@@ -148,7 +149,7 @@ public class BattleHUD : MonoBehaviour
 
         }
 
-        switch (totem.totemIs)
+        switch (Enetotem.totemIs)
         {
             case WhatisTotem.X:
                 P2_TotIcon.enabled = true;

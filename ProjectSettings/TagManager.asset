@@ -7,6 +7,8 @@ TagManager:
   - XorO
   - Tile
   - Totem
+  - MenuUI
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -20,8 +20,9 @@ public class BattleManager : MonoBehaviour
     Element Acttotemelementtype;
     Element Enetotemelementtype;
     public bool hasAttacked = false;
-
-
+    Renderer r;
+    Material m;
+    Material hm;
 
 
     public void setGameState()
@@ -30,7 +31,7 @@ public class BattleManager : MonoBehaviour
         BattleGameState = MainGameManager.gameState;
         hasAttacked = false;
 
-        ClearSelection();
+       
 
 
     }
@@ -38,17 +39,17 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
 
+     
         
         Selection();
         
 
 
-
     }
-
+    
     public void Selection()
-    {
-      
+
+    {   
     
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -62,6 +63,7 @@ public class BattleManager : MonoBehaviour
 
                 var Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
                 Debug.Log(rhInfo.collider.name);
+                
                 switch (BattleGameState)
                 {
 
@@ -74,7 +76,7 @@ public class BattleManager : MonoBehaviour
                                 break;
                             case WhatisTotem.X:
                                 EnemyTotem = Selectedtotem;
-                                battleHUD.SetEnemyHUD(EnemyTotem);
+                                battleHUD.SetEnemyHUD(EnemyTotem,ActiveTotem);
                                 break;
                           
                                
@@ -82,6 +84,7 @@ public class BattleManager : MonoBehaviour
                                 break;
                         }
                       
+
                         break;
                     case GameState.PLAYER_2_TURN:
                         switch (Selectedtotem.totemIs)
@@ -92,23 +95,24 @@ public class BattleManager : MonoBehaviour
                                 break;
                             case WhatisTotem.O:
                                 EnemyTotem = Selectedtotem;
-                                battleHUD.SetEnemyHUD(EnemyTotem);
+                                battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                                 break;
                             default:
                                 break;
                         }
-                      
-                     
+                   
+
+
                         break;
 
-
                 }
-               
 
+               
             }
 
             else
             {
+                
                 ClearSelection();
                 Debug.Log("Nothing");
             }
@@ -126,14 +130,19 @@ public class BattleManager : MonoBehaviour
 
     public void ClearSelection()
     {
+       
         EnemyTotem = null;
         ActiveTotem = null;
     }
     
     public void OnAttackButton()
     {
-        if (hasAttacked == false)
+        
+    
+        if (ActiveTotem.hasAttack == false)
         {
+            battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+            ActiveTotem.AttackTotem();
             Acttotemelementtype = ActiveTotem.TotemElementType;
             Enetotemelementtype = EnemyTotem.TotemElementType;
             switch (Acttotemelementtype)
@@ -143,7 +152,7 @@ public class BattleManager : MonoBehaviour
                     {
 
                         EnemyTotem.TakeCritDamage();
-
+                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                     }
                     else
                     {
@@ -155,7 +164,7 @@ public class BattleManager : MonoBehaviour
                     {
 
                         EnemyTotem.TakeCritDamage();
-
+                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                     }
                     else
                     {
@@ -167,7 +176,7 @@ public class BattleManager : MonoBehaviour
                     {
 
                         EnemyTotem.TakeCritDamage();
-
+                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                     }
                     else
                     {
@@ -179,7 +188,7 @@ public class BattleManager : MonoBehaviour
                     {
 
                         EnemyTotem.TakeCritDamage();
-
+                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                     }
                     else
                     {
@@ -190,8 +199,16 @@ public class BattleManager : MonoBehaviour
                     break;
             }
            
-            battleHUD.SetEnemyHUD(EnemyTotem);
-            hasAttacked = true;           
+            if(EnemyTotem.IsDead)
+            {
+                battleHUD.SetHUD(ActiveTotem);
+               
+            }
+            
+            else
+            battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+            hasAttacked = true;
+            return;
         }
        
 

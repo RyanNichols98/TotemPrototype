@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8ee2a8396f341e4a999b40ab79e8649, type: 2}
+  - {fileID: 2100000, guid: c52b5da4317c6f940a4e87fc083d73ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,21 +93,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotemElementType: 3
+  FloatingText: {fileID: 1026921439477702202, guid: 088b746c09f3b2047b92dcc00943f5ea,
+    type: 3}
   totemName: Wind Totem
-  totemMaxHP: 3
-  totemCurrentHP: 3
-  totemDamage: 2
+  totemMaxHP: 4
+  totemCurrentHP: 4
+  totemDamage: 3
   totemCurrentDamage: 0
+  totemMinHealth: 0
   totemDefence: 3
+  totemCurrentDefence: 0
   totemCritDamage: 2
   isDefending: 0
   isTotemOcc: 0
   totemsquarenumber: {fileID: 0}
   hasAttack: 0
-  XorOPrefab: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c,
-    type: 3}
-  X: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c, type: 3}
-  O: {fileID: 8972805141472719089, guid: a8e633c7b4610904f9ad2d154292d79a, type: 3}
+  IsDead: 0
+  Tiles: []
   totemIs: 0
 --- !u!65 &6326401891841019721
 BoxCollider:

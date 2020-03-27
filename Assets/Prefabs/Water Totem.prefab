@@ -93,21 +93,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotemElementType: 1
+  FloatingText: {fileID: 1026921439477702202, guid: 088b746c09f3b2047b92dcc00943f5ea,
+    type: 3}
   totemName: Fountain Totem
-  totemMaxHP: 3
-  totemCurrentHP: 3
-  totemDamage: 2
+  totemMaxHP: 4
+  totemCurrentHP: 4
+  totemDamage: 3
   totemCurrentDamage: 0
+  totemMinHealth: 0
   totemDefence: 3
+  totemCurrentDefence: 0
   totemCritDamage: 2
   isDefending: 0
   isTotemOcc: 0
   totemsquarenumber: {fileID: 0}
   hasAttack: 0
-  XorOPrefab: {fileID: 0}
-  X: {fileID: 6144787278820027347, guid: ffdcd03af9da8614681aaaa5b9d5287c, type: 3}
-  O: {fileID: 8972805141472719089, guid: a8e633c7b4610904f9ad2d154292d79a, type: 3}
-  totemIs: 1
+  IsDead: 0
+  Tiles: []
+  totemIs: 0
 --- !u!65 &7253107912470725986
 BoxCollider:
   m_ObjectHideFlags: 0

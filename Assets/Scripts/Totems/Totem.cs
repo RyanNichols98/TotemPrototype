@@ -7,7 +7,7 @@ public class Totem : MonoBehaviour
 {
     //Totem element type
     public Element TotemElementType;
-
+    public GameObject FloatingText;
     public Transform TotemTarget { get; set; }
 
     //Totem Stats
@@ -16,6 +16,7 @@ public class Totem : MonoBehaviour
     public int totemCurrentHP;
     public int totemDamage;
     public int totemCurrentDamage;
+    public int totemMinHealth;
     public int totemDefence;
     public int totemCurrentDefence;
     public int totemCritDamage;
@@ -23,7 +24,10 @@ public class Totem : MonoBehaviour
     public bool isTotemOcc = false;
     public ClickableSquare totemsquarenumber;
     public bool hasAttack;
-   
+    public bool IsDead;
+    public GameObject[] Tiles;
+    GameState Battlestate;
+    
 
     public WhatisTotem totemIs; 
    
@@ -34,14 +38,35 @@ public class Totem : MonoBehaviour
         SetTotemHealth();
 
     }
-   
 
-    void SetTotemHealth()
+    public void DestoryTotem()
+    {
+        IsDead = true;
+
+        totemsquarenumber.IsPlaneOcc = false;
+        if  (Tiles == null)
+            Tiles = GameObject.FindGameObjectsWithTag("Tile"); 
+
+        foreach (GameObject Tile in Tiles)
+        {
+            if (Tile == totemsquarenumber)
+            {
+                totemsquarenumber.IsPlaneOcc = false;
+                Tile.GetComponent<ClickableSquare>().EnableSquare();
+                totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
+            }
+        }
+        
+        Destroy(gameObject);
+    }
+    public void SetTotemHealth()
     {    
 
-        if (totemCurrentHP <= 0)
+        if (totemCurrentHP <= totemMinHealth)
         {
+            totemCurrentHP = totemMinHealth;
             DestoryTotem();
+            return;
         }
 
         else
@@ -50,40 +75,93 @@ public class Totem : MonoBehaviour
     }
    public void TakeDamage(Totem totem)
     {
-        totemCurrentHP += totemCurrentDefence;
-        totemCurrentHP -= totem.totemDamage;
-        isDefending = false;
+        totemCurrentDamage = totemDamage;
+        if (isDefending == true)
+        {
+            totemCurrentHP += totemCurrentDefence;
+            totemCurrentHP -= totem.totemDamage;
+            totemCurrentDefence = 0;
+            isDefending = false;
+        }
+        else if (isDefending == false)
+        {
+
+            totemCurrentHP -= totem.totemDamage;
+
+        }
+       
+        ShowFloatingText();
         Debug.Log(totem.totemDamage);
         Debug.Log(totemName);
-
-        if (totemCurrentHP <= 0)
-        {
-            DestoryTotem();
-        }
-
-        else
-            return;
+        SetTotemHealth();
+        
 
     }
    public  void TakeCritDamage()
     {
-        totemCurrentDamage = totemCritDamage + totemDamage;
-        totemCurrentHP -= totemCurrentDamage;
-        isDefending = false;
-
-        if (totemCurrentHP <= 0)
+        if (isDefending == true)
         {
-            DestoryTotem();
+            totemCurrentHP += totemCurrentDefence;
+            totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
+            totemCurrentDefence = 0;
+            isDefending = false;
         }
+        else if (isDefending == false)
+        {
 
-        else
-            return;
+            totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
+
+        }
+        ShowFloatingText();
+
+
+
+        SetTotemHealth();
+       
+   }
+    void ShowFloatingText()
+    {
+
+        Instantiate(FloatingText, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
     }
     
 
-   
+    public void AttackTotem()
+    {
+        switch (Battlestate)
+        {
+            
+            case GameState.PLAYER_1_TURN:
+                if (totemIs == WhatisTotem.O)
+                {
 
-   public void TotemDefend()
+                    hasAttack = true;
+                }
+                else if(totemIs == WhatisTotem.X)
+                {
+
+                    hasAttack = false;
+                }
+                break;
+            case GameState.PLAYER_2_TURN:
+                if (totemIs == WhatisTotem.X)
+                {
+
+                    hasAttack = true;
+                }
+                else if (totemIs == WhatisTotem.O)
+                {
+
+                    hasAttack = false;
+                }
+                break;
+        
+        }
+       
+    }
+
+
+    public void TotemDefend()
     {
         if (isDefending == false)
         {
@@ -96,12 +174,10 @@ public class Totem : MonoBehaviour
 
     }
 
+    
+
   
-    public void DestoryTotem()
-    {
-        totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
-        Destroy(gameObject);
-    }
+ 
     
   
 }
