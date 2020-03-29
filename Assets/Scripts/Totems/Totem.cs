@@ -7,7 +7,7 @@ public class Totem : MonoBehaviour
 {
     //Totem element type
     public Element TotemElementType;
-    public GameObject FloatingText;
+   
     public Transform TotemTarget { get; set; }
 
     //Totem Stats
@@ -41,20 +41,21 @@ public class Totem : MonoBehaviour
 
     public void DestoryTotem()
     {
+       
         IsDead = true;
-
-        totemsquarenumber.IsPlaneOcc = false;
         if  (Tiles == null)
             Tiles = GameObject.FindGameObjectsWithTag("Tile"); 
 
         foreach (GameObject Tile in Tiles)
         {
-            if (Tile == totemsquarenumber)
+            if (Tile.GetComponent<ClickableSquare>().SquareNumber == totemsquarenumber.SquareNumber)
             {
                 totemsquarenumber.IsPlaneOcc = false;
                 Tile.GetComponent<ClickableSquare>().EnableSquare();
                 totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
             }
+            else
+                Debug.Log("Fuck");
         }
         
         Destroy(gameObject);
@@ -73,25 +74,23 @@ public class Totem : MonoBehaviour
             return;
 
     }
-   public void TakeDamage(Totem totem)
+   public void TakeDamage()
     {
         totemCurrentDamage = totemDamage;
         if (isDefending == true)
         {
             totemCurrentHP += totemCurrentDefence;
-            totemCurrentHP -= totem.totemDamage;
+            totemCurrentHP -= totemDamage;
             totemCurrentDefence = 0;
             isDefending = false;
         }
         else if (isDefending == false)
         {
 
-            totemCurrentHP -= totem.totemDamage;
+            totemCurrentHP -= totemDamage;
 
         }
        
-        ShowFloatingText();
-        Debug.Log(totem.totemDamage);
         Debug.Log(totemName);
         SetTotemHealth();
         
@@ -112,20 +111,13 @@ public class Totem : MonoBehaviour
             totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
 
         }
-        ShowFloatingText();
-
+        
 
 
         SetTotemHealth();
        
    }
-    void ShowFloatingText()
-    {
-
-        Instantiate(FloatingText, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
-    }
-    
-
+  
     public void AttackTotem()
     {
         switch (Battlestate)
@@ -167,6 +159,7 @@ public class Totem : MonoBehaviour
         {
             totemCurrentDefence += totemDefence;
             isDefending = true;
+           
         }
         else if (isDefending == true)
             return;

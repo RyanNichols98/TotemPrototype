@@ -10,6 +10,9 @@ public class BattleManager : MonoBehaviour
 {
     public BattleHUD battleHUD;
 
+    public GameObject FloatingDMGText;
+    public GameObject FloatingDEFText;
+
     public float rayLength;
     public LayerMask layermask;
     public Totem[,] Totems { set; get;}
@@ -126,7 +129,19 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    void ShowDMGFloatingText(Vector3 postion)
+    {
+        postion.y = 30f;
+        var go = Instantiate(FloatingDMGText, postion, Quaternion.Euler(new Vector3(45, -90, 0)));
+        go.GetComponent<TextMesh>().text = "- " + EnemyTotem.totemCurrentDamage.ToString() + " Hp";
+    }
 
+    void ShowDEFFloatingText(Vector3 postion)
+    {
+        postion.y = 30f;
+        var go = Instantiate(FloatingDEFText, postion, Quaternion.Euler(new Vector3(45, -90, 0)));
+        go.GetComponent<TextMesh>().text = "+ " + ActiveTotem.totemDefence.ToString() + " Def";
+    }
 
     public void ClearSelection()
     {
@@ -156,7 +171,7 @@ public class BattleManager : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTotem.TakeDamage(ActiveTotem);
+                        EnemyTotem.TakeDamage();
                     }
                     break;
                 case Element.Water:
@@ -168,7 +183,7 @@ public class BattleManager : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTotem.TakeDamage(ActiveTotem);
+                        EnemyTotem.TakeDamage();
                     }
                     break;
                 case Element.Earth:
@@ -180,7 +195,7 @@ public class BattleManager : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTotem.TakeDamage(ActiveTotem);
+                        EnemyTotem.TakeDamage();
                     }
                     break;
                 case Element.Air:
@@ -192,14 +207,17 @@ public class BattleManager : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTotem.TakeDamage(ActiveTotem);
+                        EnemyTotem.TakeDamage();
+                        
                     }
                     break;
                 default:
+                    
                     break;
+
             }
-           
-            if(EnemyTotem.IsDead)
+                ShowDMGFloatingText(EnemyTotem.transform.position);
+            if (EnemyTotem.IsDead)
             {
                 battleHUD.SetHUD(ActiveTotem);
                
@@ -227,6 +245,7 @@ public class BattleManager : MonoBehaviour
         {
             ActiveTotem.TotemDefend();
             battleHUD.SetHUD(ActiveTotem);
+            ShowDEFFloatingText(ActiveTotem.transform.position);
             if (ActiveTotem.totemCurrentHP <= 0)
                 Destroy(ActiveTotem.gameObject);
 

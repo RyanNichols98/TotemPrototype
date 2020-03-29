@@ -4,14 +4,11 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - FireTotem: {fileID: -927199367670048503, guid: cf6e8605895cffd479c292e80bf13984,
+  - FloatingDMGText: {fileID: 1026921439477702202, guid: 088b746c09f3b2047b92dcc00943f5ea,
       type: 3}
-  - WaterTotem: {fileID: -927199367670048503, guid: a8d73464f4c0e7349a0595851631a641,
+  - FloatingDEFText: {fileID: 3362579260180766211, guid: 2f41b76fee9f6324d9d44ce53195186a,
       type: 3}
-  - EarthTotem: {fileID: -927199367670048503, guid: a09a8fac4a8b7344996e1ae1d15bef51,
-      type: 3}
-  - AirTotem: {fileID: -927199367670048503, guid: 9cd757288202fdd4091e04b30776f9a6,
-      type: 3}
+  - totemsquarenumber: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
