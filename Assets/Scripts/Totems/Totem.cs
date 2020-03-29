@@ -7,8 +7,11 @@ public class Totem : MonoBehaviour
 {
     //Totem element type
     public Element TotemElementType;
-   
-    public Transform TotemTarget { get; set; }
+
+    //Materials for totem
+    public Material Player1;
+    public Material Player2;
+    public Material TotemMat;
 
     //Totem Stats
     public string totemName;
@@ -22,13 +25,16 @@ public class Totem : MonoBehaviour
     public int totemCritDamage;
     public bool isDefending = false;
     public bool isTotemOcc = false;
-    public ClickableSquare totemsquarenumber;
     public bool hasAttack;
     public bool IsDead;
-    public GameObject[] Tiles;
-    GameState Battlestate;
-    
 
+    // Tile that Totem is on
+    public ClickableSquare totemsquarenumber;  
+    public GameObject[] Tiles;
+
+    // GameState
+    
+    GameState Battlestate;
     public WhatisTotem totemIs; 
    
    void Update()
@@ -39,6 +45,26 @@ public class Totem : MonoBehaviour
 
     }
 
+    public void SetMat()
+    {
+
+        switch (totemIs)
+        {
+            case WhatisTotem.X:
+                TotemMat = Player2;
+                gameObject.GetComponentInChildren<Renderer>().material = TotemMat;
+                break;
+            case WhatisTotem.O:
+                TotemMat = Player1;
+                gameObject.GetComponentInChildren<Renderer>().material = TotemMat;
+                break;
+            
+        }
+
+
+
+
+    }
     public void DestoryTotem()
     {
        

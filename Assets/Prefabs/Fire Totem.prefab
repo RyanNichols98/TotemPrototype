@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7711947925191540340}
   m_Layer: 9
   m_Name: Fire Totem
-  m_TagString: Untagged
+  m_TagString: Totem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d4a3b0ce8dc8d8846bcfc785d772000e, type: 2}
+  - {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,8 +93,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotemElementType: 0
-  FloatingText: {fileID: 1026921439477702202, guid: 088b746c09f3b2047b92dcc00943f5ea,
-    type: 3}
+  Player1: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
+  Player2: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
+  TotemMat: {fileID: 0}
   totemName: Volcanic Totem
   totemMaxHP: 4
   totemCurrentHP: 4
@@ -106,11 +107,11 @@ MonoBehaviour:
   totemCritDamage: 2
   isDefending: 0
   isTotemOcc: 0
-  totemsquarenumber: {fileID: 0}
   hasAttack: 0
   IsDead: 0
+  totemsquarenumber: {fileID: 0}
   Tiles: []
-  totemIs: 1
+  totemIs: 0
 --- !u!65 &7711947925191540340
 BoxCollider:
   m_ObjectHideFlags: 0

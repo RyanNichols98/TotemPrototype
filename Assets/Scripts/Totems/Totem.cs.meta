@@ -4,10 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - FloatingDMGText: {fileID: 1026921439477702202, guid: 088b746c09f3b2047b92dcc00943f5ea,
-      type: 3}
-  - FloatingDEFText: {fileID: 3362579260180766211, guid: 2f41b76fee9f6324d9d44ce53195186a,
-      type: 3}
+  - Player1: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
+  - Player2: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
   - totemsquarenumber: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}

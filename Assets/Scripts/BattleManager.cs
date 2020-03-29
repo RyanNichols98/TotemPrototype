@@ -8,21 +8,34 @@ using UnityEngine.EventSystems;
 
 public class BattleManager : MonoBehaviour
 {
+    //General Battle System Variables
     public BattleHUD battleHUD;
-
-    public GameObject FloatingDMGText;
-    public GameObject FloatingDEFText;
-
-    public float rayLength;
-    public LayerMask layermask;
-    public Totem[,] Totems { set; get;}
-    public Totem ActiveTotem;
-    public Totem EnemyTotem;
     public GameState BattleGameState;
     public GameManager MainGameManager;
+
+    //Floating Text Game Object
+    public GameObject FloatingDMGText;
+    public GameObject FloatingDEFText;
+    //RayCast Variable
+    public float rayLength;
+    public LayerMask layermask;
+
+    //Totem Game Objects & Variables
+    public Totem ActiveTotem;
+    public Totem EnemyTotem;
+    public Totem Selectedtotem;
+    public bool hasAttacked = false;
+    public GameObject[] Totems;
+
+    //Totem Element Variables
     Element Acttotemelementtype;
     Element Enetotemelementtype;
-    public bool hasAttacked = false;
+
+    public Material HighlightedMat;
+    public Material EneMat;
+    public Material Player1Mat;
+    public Material Player2Mat;
+    public Material TotemOrginalMat;
     Renderer r;
     Material m;
     Material hm;
@@ -30,7 +43,7 @@ public class BattleManager : MonoBehaviour
 
     public void setGameState()
     {
-
+        
         BattleGameState = MainGameManager.gameState;
         hasAttacked = false;
 
@@ -64,7 +77,9 @@ public class BattleManager : MonoBehaviour
             if (Physics.Raycast(toMouse, out rhInfo, rayLength, layermask))
             {
 
-                var Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
+                Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
+                TotemOrginalMat = Selectedtotem.GetComponentInChildren<Renderer>().material;
+                
                 Debug.Log(rhInfo.collider.name);
                 
                 switch (BattleGameState)
@@ -75,10 +90,12 @@ public class BattleManager : MonoBehaviour
                         {
                             case WhatisTotem.O:
                                 ActiveTotem = Selectedtotem;
+                                ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
                                 battleHUD.SetHUD(ActiveTotem);
                                 break;
                             case WhatisTotem.X:
                                 EnemyTotem = Selectedtotem;
+                                EnemyTotem.GetComponentInChildren<Renderer>().material = EneMat;
                                 battleHUD.SetEnemyHUD(EnemyTotem,ActiveTotem);
                                 break;
                           
@@ -94,17 +111,19 @@ public class BattleManager : MonoBehaviour
                         {
                             case WhatisTotem.X:
                                 ActiveTotem = Selectedtotem;
+                                ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
                                 battleHUD.SetHUD(ActiveTotem);
                                 break;
                             case WhatisTotem.O:
                                 EnemyTotem = Selectedtotem;
+                                EnemyTotem.GetComponentInChildren<Renderer>().material =  EneMat;
                                 battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
                                 break;
                             default:
                                 break;
                         }
-                   
 
+                      
 
                         break;
 
@@ -115,7 +134,11 @@ public class BattleManager : MonoBehaviour
 
             else
             {
-                
+
+
+              
+
+
                 ClearSelection();
                 Debug.Log("Nothing");
             }
@@ -145,9 +168,15 @@ public class BattleManager : MonoBehaviour
 
     public void ClearSelection()
     {
-       
+        Totems = GameObject.FindGameObjectsWithTag("Totem");
+
+        foreach (GameObject Totem in Totems)
+        {
+            Totem.GetComponentInChildren<Renderer>().material = Totem.GetComponentInChildren<Totem>().TotemMat;
+        }
         EnemyTotem = null;
         ActiveTotem = null;
+
     }
     
     public void OnAttackButton()

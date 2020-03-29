@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7458685814100147464}
   - component: {fileID: 1153765677397350599}
   m_Layer: 0
-  m_Name: FloatingText
+  m_Name: FloatinDmgText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 07b8c928414760c46895b58b7917ac6b, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4294967295
 --- !u!114 &1153765677397350599
 MonoBehaviour:
   m_ObjectHideFlags: 0

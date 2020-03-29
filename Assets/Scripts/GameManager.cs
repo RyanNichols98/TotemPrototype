@@ -65,7 +65,8 @@ public class GameManager : MonoBehaviour
 
         
                 turnCounter = 1;
-                gameState = GameState.PLAYER_1_TURN;             
+                gameState = GameState.PLAYER_1_TURN;
+                MainBattleManger.setGameState();
                 battleHUD.SetCombatText(gameState);
                 TotemIs = WhatisTotem.O;
         
@@ -246,21 +247,25 @@ public class GameManager : MonoBehaviour
             case Element.Fire:
                 selectedTotem = FireTotem;
                 selectedTotem.totemIs = TotemIs;
+                selectedTotem.SetMat();
                 Instantiate(selectedTotem, postion, Quaternion.identity);         
                 break;
             case Element.Water:
                 selectedTotem = WaterTotem;
                 selectedTotem.totemIs = TotemIs;
+                selectedTotem.SetMat();
                 Instantiate(selectedTotem, postion, Quaternion.identity);              
                 break;
             case Element.Earth:
                 selectedTotem = EarthTotem;
                 selectedTotem.totemIs = TotemIs;
+                selectedTotem.SetMat();
                 Instantiate(selectedTotem, postion, Quaternion.identity);               
                 break;
             case Element.Air:
                 selectedTotem = AirTotem;
                 selectedTotem.totemIs = TotemIs;
+                selectedTotem.SetMat();
                 Instantiate(selectedTotem, postion, Quaternion.identity);
                 break;
             default:
@@ -349,11 +354,12 @@ public class GameManager : MonoBehaviour
                 gameState = GameState.PLAYER_1_TURN;                            
                 break;
             case GameState.END:
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
                 break;
           
         }
         MainBattleManger.setGameState();
+        MainBattleManger.ClearSelection();
         isTotemPlaced = false;
         battleHUD.SetCombatText(gameState);
         NextTurn();
