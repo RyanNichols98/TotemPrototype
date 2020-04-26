@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 public enum WhatisTotem { X, O }
+[System.Serializable]
 public class Totem : MonoBehaviour
 {
+
+
     //Totem element type
     public Element TotemElementType;
 
@@ -67,7 +70,7 @@ public class Totem : MonoBehaviour
     }
     public void DestoryTotem()
     {
-       
+        totemsquarenumber.IsPlaneOcc = false;
         IsDead = true;
         if  (Tiles == null)
             Tiles = GameObject.FindGameObjectsWithTag("Tile"); 
@@ -76,9 +79,9 @@ public class Totem : MonoBehaviour
         {
             if (Tile.GetComponent<ClickableSquare>().SquareNumber == totemsquarenumber.SquareNumber)
             {
-                totemsquarenumber.IsPlaneOcc = false;
-                Tile.GetComponent<ClickableSquare>().EnableSquare();
-                totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
+                //totemsquarenumber.IsPlaneOcc = false;
+                //Tile.GetComponentInChildren<ClickableSquare>().EnableSquare();
+                //totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
             }
             else
                 Debug.Log("Fuck");

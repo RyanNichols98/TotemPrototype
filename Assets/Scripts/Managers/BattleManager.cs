@@ -78,8 +78,6 @@ public class BattleManager : MonoBehaviour
             {
 
                 Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
-                TotemOrginalMat = Selectedtotem.GetComponentInChildren<Renderer>().material;
-                
                 Debug.Log(rhInfo.collider.name);
                 
                 switch (BattleGameState)
@@ -128,9 +126,10 @@ public class BattleManager : MonoBehaviour
                         break;
 
                 }
+                
 
-               
             }
+            
 
             else
             {
@@ -176,7 +175,7 @@ public class BattleManager : MonoBehaviour
         }
         EnemyTotem = null;
         ActiveTotem = null;
-
+        Selectedtotem = null;
     }
     
     public void OnAttackButton()

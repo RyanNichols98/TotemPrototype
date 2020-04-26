@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, END }
+public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, PAUSED, END }
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     Element totemElementType;
 
     // These are for Object Prefabs
-    
+    public GameObject[] Tiles;
     public bool isTotemPlaced = false;
 
     public float rayLength;
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
        bool isplaneocc = square.GetComponent<ClickableSquare>().IsPlaneOcc;
 
-        if (isplaneocc == false && isTotemPlaced == false)
+        if (isplaneocc == false && isTotemPlaced == false && gameState != GameState.PAUSED)
         {
             MainBattleManger.ClearSelection();
             //increase click count
@@ -110,10 +110,21 @@ public class GameManager : MonoBehaviour
 
             //spawn totem
             SpawnTotem(square.transform.position);
-           
-            // make the player own the square
 
-            selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
+            // make the player own the square
+            if (Tiles == null)
+                Tiles = GameObject.FindGameObjectsWithTag("Tile");
+
+            foreach (GameObject Tile in Tiles)
+            {
+                if (Tile.GetComponent<ClickableSquare>().SquareNumber == square.GetComponent<ClickableSquare>().SquareNumber && square.GetComponent<ClickableSquare>().IsPlaneOcc == false)
+                {
+                    selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
+                }
+                else
+                    Debug.Log("Fuck");
+            }
+            
             
             battleHUD.SetHUD(selectedTotem);
            
