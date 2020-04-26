@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
+  - {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   TotemElementType: 3
   Player1: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
   Player2: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
-  TotemMat: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
+  TotemMat: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
   totemName: Wind Totem
   totemMaxHP: 4
   totemCurrentHP: 4
@@ -111,8 +111,9 @@ MonoBehaviour:
   hasAttack: 0
   IsDead: 0
   totemsquarenumber: {fileID: 0}
+  TotemTileNumber: 7
   Tiles: []
-  totemIs: 0
+  totemIs: 1
 --- !u!65 &6326401891841019721
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,7 +134,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4862496976349821551}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dee9c61f6444fb347abfc46702309ecb, type: 3}

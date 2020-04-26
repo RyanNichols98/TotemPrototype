@@ -32,11 +32,13 @@ public class Totem : MonoBehaviour
     public bool IsDead;
 
     // Tile that Totem is on
-    public ClickableSquare totemsquarenumber;  
-    public GameObject[] Tiles;
+    public ClickableSquare totemsquarenumber = null;
+    public int TotemTileNumber;
+    public ClickableSquare[] Tiles;
+
 
     // GameState
-    
+
     GameState Battlestate;
     public WhatisTotem totemIs; 
    
@@ -48,6 +50,10 @@ public class Totem : MonoBehaviour
 
     }
 
+    public void Awake()
+    {
+        FindObjectOfType<SoundManager>().Play("TotemPlacedAudio");
+    }
     public void SetMat()
     {
 
@@ -70,24 +76,10 @@ public class Totem : MonoBehaviour
     }
     public void DestoryTotem()
     {
-        totemsquarenumber.IsPlaneOcc = false;
+        FindObjectOfType<GameManager>().EnableTile(totemsquarenumber);
         IsDead = true;
-        if  (Tiles == null)
-            Tiles = GameObject.FindGameObjectsWithTag("Tile"); 
-
-        foreach (GameObject Tile in Tiles)
-        {
-            if (Tile.GetComponent<ClickableSquare>().SquareNumber == totemsquarenumber.SquareNumber)
-            {
-                //totemsquarenumber.IsPlaneOcc = false;
-                //Tile.GetComponentInChildren<ClickableSquare>().EnableSquare();
-                //totemsquarenumber.GetComponent<ClickableSquare>().EnableSquare();
-            }
-            else
-                Debug.Log("Fuck");
-        }
-        
         Destroy(gameObject);
+        Debug.Log(totemName + " is Destroyed");
     }
     public void SetTotemHealth()
     {    
@@ -149,6 +141,7 @@ public class Totem : MonoBehaviour
   
     public void AttackTotem()
     {
+       
         switch (Battlestate)
         {
             
@@ -181,7 +174,12 @@ public class Totem : MonoBehaviour
        
     }
 
+   
 
+
+
+
+    
     public void TotemDefend()
     {
         if (isDefending == false)

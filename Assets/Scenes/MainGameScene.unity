@@ -557,44 +557,44 @@ MonoBehaviour:
   sounds:
   - name: NewTurnAudio
     clip: {fileID: 8300000, guid: 6695d06486f87aa45b7ff0b71062a3a6, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: SelectAudio
     clip: {fileID: 8300000, guid: 199a0e7fd77aed84e9656d7141abc26a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: TotemPlacedAudio
     clip: {fileID: 8300000, guid: dee9c61f6444fb347abfc46702309ecb, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: FireTotemAtkAudio
     clip: {fileID: 8300000, guid: 0d81d97a9570c3447bdf59a8a3a8db39, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: AirTotemAtkAudio
     clip: {fileID: 8300000, guid: 37bba53edc2971b4db83025a3cd4f65e, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: EarthTotemAtkAudio
     clip: {fileID: 8300000, guid: 84abd7593cd8d344388e57a93227f394, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: WaterTotemAtkAudio
     clip: {fileID: 8300000, guid: 6669e66e9323fca4ea2e41c49cdeccd1, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
 --- !u!4 &223974228
@@ -1192,7 +1192,16 @@ MonoBehaviour:
   EarthTotem: {fileID: 2473187284621741854, guid: a2b3aa646d415264e8276702672e983c,
     type: 3}
   selectedTotem: {fileID: 0}
-  Tiles: []
+  Tiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isTotemPlaced: 0
   rayLength: 1000
   layermask:

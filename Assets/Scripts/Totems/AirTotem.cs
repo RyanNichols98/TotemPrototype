@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AirTotem : Totem
 {
+ 
     new Element TotemElementType = Element.Air;
     // Start is called before the first frame update
     void Start()

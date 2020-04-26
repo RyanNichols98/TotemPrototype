@@ -8,7 +8,7 @@ public enum Element { Fire, Water, Earth, Air }
 public class ClickableSquare : MonoBehaviour
 {
     public Element PlaneType;
-    public int SquareNumber = 0;
+    public int SquareNumber;
     public bool IsPlaneOcc = false;
     
     void OnMouseDown()
@@ -16,7 +16,7 @@ public class ClickableSquare : MonoBehaviour
 
         if (IsPlaneOcc == false)
         {
-
+           // FindObjectOfType<GameManager>().SquareClicked(this); 
             GameObject.Find("Game Manager").SendMessage("SquareClicked", gameObject);
             
         }

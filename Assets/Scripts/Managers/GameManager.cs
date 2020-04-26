@@ -26,13 +26,14 @@ public class GameManager : MonoBehaviour
     Element totemElementType;
 
     // These are for Object Prefabs
-    public GameObject[] Tiles;
+    public ClickableSquare[] Tiles;
     public bool isTotemPlaced = false;
 
     public float rayLength;
     public LayerMask layermask;
 
-    
+    int TileNumber;
+
     // TurnCounter
 
     //CombatLogText
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
 
         if (isplaneocc == false && isTotemPlaced == false && gameState != GameState.PAUSED)
         {
+           
             MainBattleManger.ClearSelection();
             //increase click count
             ClickCount += 1;
@@ -108,30 +110,23 @@ public class GameManager : MonoBehaviour
 
             totemElementType = ElementType;
 
+            Debug.Log(SquareNumber + " is set");
+            TileNumber = SquareNumber;
+           
             //spawn totem
             SpawnTotem(square.transform.position);
+            selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
+            // selectedTotem.TotemTileNumber = SquareNumber;
 
-            // make the player own the square
-            if (Tiles == null)
-                Tiles = GameObject.FindGameObjectsWithTag("Tile");
-
-            foreach (GameObject Tile in Tiles)
-            {
-                if (Tile.GetComponent<ClickableSquare>().SquareNumber == square.GetComponent<ClickableSquare>().SquareNumber && square.GetComponent<ClickableSquare>().IsPlaneOcc == false)
-                {
-                    selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
-                }
-                else
-                    Debug.Log("Fuck");
-            }
-            
-            
             battleHUD.SetHUD(selectedTotem);
            
             CheckForWinner();
 
             //Next player turn
+
            
+
+
 
         }
 
@@ -259,25 +254,29 @@ public class GameManager : MonoBehaviour
                 selectedTotem = FireTotem;
                 selectedTotem.totemIs = TotemIs;
                 selectedTotem.SetMat();
-                Instantiate(selectedTotem, postion, Quaternion.identity);         
+                selectedTotem.TotemTileNumber = TileNumber;
+                selectedTotem = Instantiate(selectedTotem, postion, Quaternion.identity);          
                 break;
             case Element.Water:
                 selectedTotem = WaterTotem;
                 selectedTotem.totemIs = TotemIs;
                 selectedTotem.SetMat();
-                Instantiate(selectedTotem, postion, Quaternion.identity);              
+                selectedTotem.TotemTileNumber = TileNumber;
+                selectedTotem = Instantiate(selectedTotem, postion, Quaternion.identity);              
                 break;
             case Element.Earth:
                 selectedTotem = EarthTotem;
                 selectedTotem.totemIs = TotemIs;
                 selectedTotem.SetMat();
-                Instantiate(selectedTotem, postion, Quaternion.identity);               
+                selectedTotem.TotemTileNumber = TileNumber;
+                selectedTotem = Instantiate(selectedTotem, postion, Quaternion.identity);               
                 break;
             case Element.Air:
                 selectedTotem = AirTotem;
                 selectedTotem.totemIs = TotemIs;
                 selectedTotem.SetMat();
-                Instantiate(selectedTotem, postion, Quaternion.identity);
+                selectedTotem.TotemTileNumber = TileNumber;
+                selectedTotem =Instantiate(selectedTotem, postion, Quaternion.identity);
                 break;
             default:
                 break;
@@ -287,7 +286,11 @@ public class GameManager : MonoBehaviour
         
         isTotemPlaced = true;
     }
-   
+    public void EnableTile(ClickableSquare tile)
+    {
+        tile.EnableSquare();
+        squares[tile.SquareNumber] = 0;
+    }
 
     public void NextTurn()
     {
@@ -375,7 +378,7 @@ public class GameManager : MonoBehaviour
         battleHUD.SetCombatText(gameState);
         NextTurn();
         MainBattleManger.ClearSelection();
-
+        FindObjectOfType<SoundManager>().Play("NewTurnAudio");
     }
 }
 
