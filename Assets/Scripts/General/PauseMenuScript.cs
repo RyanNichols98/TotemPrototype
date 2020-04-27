@@ -28,7 +28,7 @@ public class PauseMenuScript : MonoBehaviour
 
             }
 
-
+            FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
 
 
 
@@ -41,7 +41,7 @@ public class PauseMenuScript : MonoBehaviour
         Time.timeScale = 1F;
         PauseMenu = false;
         gamepauseManager.gameState = pauseState;
-
+        FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
     }
 
     public void Pause()
@@ -54,7 +54,7 @@ public class PauseMenuScript : MonoBehaviour
         GameUi.SetActive(false);
         Time.timeScale = 0F;
         PauseMenu = true;
-
+        FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
     }
 
     public void QuitGame()
@@ -64,7 +64,7 @@ public class PauseMenuScript : MonoBehaviour
         Debug.Log("Game Quit");
         Application.Quit();
 
-
+        FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
 
     }
     public void LoadMenu()
@@ -72,7 +72,7 @@ public class PauseMenuScript : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 
-
+        FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
 
     }
 

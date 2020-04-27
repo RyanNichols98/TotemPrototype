@@ -110,6 +110,8 @@ MonoBehaviour:
   isTotemOcc: 0
   hasAttack: 0
   IsDead: 0
+  Weakness: Water
+  Strength: Earth
   totemsquarenumber: {fileID: 0}
   TotemTileNumber: 2
   Tiles: []

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-   public void PlayGame()
+    public void PlayGame()
     {
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -23,6 +23,14 @@ public class MainMenuScript : MonoBehaviour
         Application.Quit();
 
 
+
+    }
+
+
+    public void PlaySelectAuio()
+
+    {
+        FindObjectOfType<SoundManager>().Play("MenuSelectAudio");
 
     }
 }

@@ -30,7 +30,8 @@ public class Totem : MonoBehaviour
     public bool isTotemOcc = false;
     public bool hasAttack;
     public bool IsDead;
-
+    public string Weakness;
+    public string Strength;
     // Tile that Totem is on
     public ClickableSquare totemsquarenumber = null;
     public int TotemTileNumber;
@@ -80,6 +81,7 @@ public class Totem : MonoBehaviour
         IsDead = true;
         Destroy(gameObject);
         Debug.Log(totemName + " is Destroyed");
+        FindObjectOfType<SoundManager>().Play("TotemDeathAudio");
     }
     public void SetTotemHealth()
     {    
@@ -186,7 +188,7 @@ public class Totem : MonoBehaviour
         {
             totemCurrentDefence += totemDefence;
             isDefending = true;
-           
+            FindObjectOfType<SoundManager>().Play("TotemDefAudio");
         }
         else if (isDefending == true)
             return;

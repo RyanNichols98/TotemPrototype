@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 turnCounter = 1;
                 gameState = GameState.PLAYER_1_TURN;
                 MainBattleManger.setGameState();
-                battleHUD.SetCombatText(gameState);
+                SetCombatText(gameState);
                 TotemIs = WhatisTotem.O;
         
 
@@ -219,13 +219,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (ClickCount == 9 && Winner == 0)
-        {
-
-            Winner = 3;
-
-
-        }
+       
     }
 
   
@@ -375,10 +369,31 @@ public class GameManager : MonoBehaviour
         MainBattleManger.setGameState();
         MainBattleManger.ClearSelection();
         isTotemPlaced = false;
-        battleHUD.SetCombatText(gameState);
+        SetCombatText(gameState);
         NextTurn();
         MainBattleManger.ClearSelection();
         FindObjectOfType<SoundManager>().Play("NewTurnAudio");
+    }
+    public void SetCombatText(GameState gamestate)
+    {
+        
+        switch (gameState)
+        {
+            case GameState.START:
+                break;
+            case GameState.PLAYER_1_TURN:
+                CombatText.text = "Player One Turn";          
+                break;
+            case GameState.PLAYER_2_TURN:
+                CombatText.text = "Player Two Turn";            
+                break;
+            case GameState.END:
+                break;
+            default:
+                break;
+        }
+
+
     }
 }
 

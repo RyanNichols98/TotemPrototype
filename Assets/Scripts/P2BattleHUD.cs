@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class BattleHUD : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
 
     public Text totemName;
@@ -29,7 +28,7 @@ public class BattleHUD : MonoBehaviour
     public Button AtkButton;
     public Button DefButton;
 
-    
+
 
     GameState GameState;
 
@@ -41,7 +40,7 @@ public class BattleHUD : MonoBehaviour
         hpSlider.maxValue = 5;
         hpSlider.value = 5;
         DmgText.text = null;
-        DefText.text = null; 
+        DefText.text = null;
         Str.text = null;
         Wkn.text = null;
         //AtkButton.enabled = false;
@@ -107,17 +106,27 @@ public class BattleHUD : MonoBehaviour
 
         }
 
-       
-       
+        switch (totem.totemIs)
+        {
+            case WhatisTotem.X:
+                P2_TotIcon.enabled = true;
+                P1_TotIcon.enabled = false;
+                break;
+            case WhatisTotem.O:
+                P1_TotIcon.enabled = true;
+                P2_TotIcon.enabled = false;
+                break;
+            default:
+                break;
+        }
+
     }
 
-  
-
-
     
+   
 
-    
-    public void SetHP (int hp)
+
+    public void SetHP(int hp)
     {
 
 
@@ -128,14 +137,15 @@ public class BattleHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-   
+
+
 }

@@ -9,7 +9,10 @@ using UnityEngine.EventSystems;
 public class BattleManager : MonoBehaviour
 {
     //General Battle System Variables
-    public BattleHUD battleHUD;
+    public BattleHUD P1battleHUD;
+    public BattleHUD P2battleHUD;
+    public BattleHUD CurrbattleHUD;
+    public BattleHUD EnebattleHUD;
     public GameState BattleGameState;
     public GameManager MainGameManager;
 
@@ -55,7 +58,19 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
 
-
+        switch (BattleGameState)
+        {
+          
+            case GameState.PLAYER_1_TURN:
+                CurrbattleHUD = P1battleHUD;
+                EnebattleHUD = P2battleHUD;
+                break;
+            case GameState.PLAYER_2_TURN:
+                CurrbattleHUD = P2battleHUD;
+                EnebattleHUD = P1battleHUD;
+                break;
+            
+        }
 
         Selection();
 
@@ -89,12 +104,12 @@ public class BattleManager : MonoBehaviour
                             case WhatisTotem.O:
                                 ActiveTotem = Selectedtotem;
                                 ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
-                                battleHUD.SetHUD(ActiveTotem);
+                                P1battleHUD.SetHUD(ActiveTotem);
                                 break;
                             case WhatisTotem.X:
                                 EnemyTotem = Selectedtotem;
                                 EnemyTotem.GetComponentInChildren<Renderer>().material = EneMat;
-                                battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                                P2battleHUD.SetHUD(EnemyTotem);
                                 break;
 
 
@@ -110,12 +125,12 @@ public class BattleManager : MonoBehaviour
                             case WhatisTotem.X:
                                 ActiveTotem = Selectedtotem;
                                 ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
-                                battleHUD.SetHUD(ActiveTotem);
+                                P2battleHUD.SetHUD(ActiveTotem);
                                 break;
                             case WhatisTotem.O:
                                 EnemyTotem = Selectedtotem;
                                 EnemyTotem.GetComponentInChildren<Renderer>().material = EneMat;
-                                battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                                P1battleHUD.SetHUD(EnemyTotem);
                                 break;
                             default:
                                 break;
@@ -184,7 +199,7 @@ public class BattleManager : MonoBehaviour
 
         if (ActiveTotem.hasAttack == false)
         {
-            battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+            EnebattleHUD.SetHUD(EnemyTotem);
             ActiveTotem.AttackTotem();
             Acttotemelementtype = ActiveTotem.TotemElementType;
             Enetotemelementtype = EnemyTotem.TotemElementType;
@@ -195,7 +210,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeCritDamage();
-                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
@@ -208,7 +223,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeCritDamage();
-                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
@@ -221,7 +236,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeCritDamage();
-                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
@@ -234,7 +249,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeCritDamage();
-                        battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
@@ -251,12 +266,12 @@ public class BattleManager : MonoBehaviour
             ShowDMGFloatingText(EnemyTotem.transform.position);
             if (EnemyTotem.IsDead)
             {
-                battleHUD.SetHUD(ActiveTotem);
+                EnebattleHUD.ResetHUD();
 
             }
 
             else
-                battleHUD.SetEnemyHUD(EnemyTotem, ActiveTotem);
+                EnebattleHUD.SetHUD(EnemyTotem);
             hasAttacked = true;
             return;
         }
@@ -276,13 +291,13 @@ public class BattleManager : MonoBehaviour
         if (ActiveTotem.isDefending == false)
         {
             ActiveTotem.TotemDefend();
-            battleHUD.SetHUD(ActiveTotem);
+            CurrbattleHUD.SetHUD(ActiveTotem);
             ShowDEFFloatingText(ActiveTotem.transform.position);
             if (ActiveTotem.totemCurrentHP <= 0)
                 Destroy(ActiveTotem.gameObject);
 
             else
-                battleHUD.SetHUD(ActiveTotem);
+                CurrbattleHUD.SetHUD(ActiveTotem);
             return;
 
 
