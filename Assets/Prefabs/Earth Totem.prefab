@@ -98,8 +98,8 @@ MonoBehaviour:
   Player2: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
   TotemMat: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
   totemName: Tree Totem
-  totemMaxHP: 4
-  totemCurrentHP: 4
+  totemMaxHP: 8
+  totemCurrentHP: 5
   totemDamage: 3
   totemCurrentDamage: 0
   totemMinHealth: 0

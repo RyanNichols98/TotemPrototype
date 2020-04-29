@@ -121,19 +121,13 @@ public class Totem : MonoBehaviour
     }
    public  void TakeCritDamage()
     {
-        if (isDefending == true)
-        {
-            totemCurrentHP += totemCurrentDefence;
+        
+            
             totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
-            totemCurrentDefence = 0;
-            isDefending = false;
-        }
-        else if (isDefending == false)
-        {
-
-            totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
-
-        }
+        totemCurrentDefence = 0;
+        isDefending = false;
+        
+       
         
 
 
@@ -143,7 +137,8 @@ public class Totem : MonoBehaviour
   
     public void AttackTotem()
     {
-       
+            hasAttack = true;
+
         switch (Battlestate)
         {
             
@@ -187,6 +182,7 @@ public class Totem : MonoBehaviour
         if (isDefending == false)
         {
             totemCurrentDefence += totemDefence;
+            totemCurrentHP += totemCurrentDefence;
             isDefending = true;
             FindObjectOfType<SoundManager>().Play("TotemDefAudio");
         }

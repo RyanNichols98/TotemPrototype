@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     //Battle Manager
     public BattleManager MainBattleManger;
 
-    public WhatisTotem TotemIs;
+    public WhatisTotem TotemIs = WhatisTotem.O;
 
     //Prefabs for each Totem
     public Totem WaterTotem;
@@ -62,13 +62,13 @@ public class GameManager : MonoBehaviour
     int ClickCount = 0;
     void Start()
     {
-        //var choice = gameState = GameState.PLAYER_1_TURN;
+        
 
         
                 turnCounter = 1;
                 gameState = GameState.PLAYER_1_TURN;
                 MainBattleManger.setGameState();
-                SetCombatText(gameState);
+                SetCombatText();
                 TotemIs = WhatisTotem.O;
         
 
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
             selectedTotem.totemsquarenumber = square.GetComponent<ClickableSquare>();
             // selectedTotem.TotemTileNumber = SquareNumber;
 
-            battleHUD.SetHUD(selectedTotem);
+           
            
             CheckForWinner();
 
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
 
         TurnText.text = "Turn: " + turnCounter.ToString();
 
-
+        SetCombatText();
 
     }
 
@@ -369,12 +369,11 @@ public class GameManager : MonoBehaviour
         MainBattleManger.setGameState();
         MainBattleManger.ClearSelection();
         isTotemPlaced = false;
-        SetCombatText(gameState);
+        SetCombatText();
         NextTurn();
-        MainBattleManger.ClearSelection();
         FindObjectOfType<SoundManager>().Play("NewTurnAudio");
     }
-    public void SetCombatText(GameState gamestate)
+    public void SetCombatText()
     {
         
         switch (gameState)

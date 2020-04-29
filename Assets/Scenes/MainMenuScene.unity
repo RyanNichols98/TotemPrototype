@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -94.8, y: -54}
+  m_AnchoredPosition: {x: -103.3, y: -54}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &73582363
@@ -424,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -94.9, y: -15}
+  m_AnchoredPosition: {x: -103.4, y: -15}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &254330393
@@ -629,8 +629,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46.600006, y: -66.1}
-  m_SizeDelta: {x: 400, y: 150}
+  m_AnchoredPosition: {x: -26.3, y: -66.1}
+  m_SizeDelta: {x: 700, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365416416
 MonoBehaviour:
@@ -665,7 +665,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Totem's has 5 Health Points, and are destoryed when they reach 0.
+  m_Text: Totem's have 5 Health Points, and are destoryed when they reach 0.
 --- !u!222 &365416417
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1269,7 +1269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -94.8, y: -33.899998}
+  m_AnchoredPosition: {x: -103.3, y: -33.899998}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928976603
@@ -1548,7 +1548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.1, y: 17.5}
+  m_AnchoredPosition: {x: -24.599998, y: 17.5}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990987980
@@ -1709,8 +1709,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -37.600006, y: -23.5}
-  m_SizeDelta: {x: 500, y: 150}
+  m_AnchoredPosition: {x: -26.899998, y: -23.5}
+  m_SizeDelta: {x: 700, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113158694
 MonoBehaviour:
@@ -1745,8 +1745,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Select your Totem then the Enemy''s Totem. Press the Attack Button to Atttack
-    Totem.
+  m_Text: 'The attack button will display the selected Totems''s damage. Select your
+    Totem then the Enemy''s Totem, and press this button to Attack Totem.
 
 '
 --- !u!222 &1113158695
@@ -1870,8 +1870,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.800003, y: -42.7}
-  m_SizeDelta: {x: 500, y: 150}
+  m_AnchoredPosition: {x: -26.399998, y: -42.7}
+  m_SizeDelta: {x: 700, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1247804247
 MonoBehaviour:
@@ -1906,8 +1906,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Select your Totem and press the Defend Button to  add +3 to your Totem's
-    Health.
+  m_Text: The defence button will display the selected Totem's defence. Select your
+    Totem and press the defend button to  add +3 to your Totem's health.
 --- !u!222 &1247804248
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2916,11 +2916,17 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Theme
-    clip: {fileID: 8300000, guid: d40430720e4fa5844a3046383cdf9853, type: 3}
+  - name: Theme1
+    clip: {fileID: 8300000, guid: d7d4f189203e2a54d9f7ee1dfd73c1e7, type: 3}
     volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Theme2
+    clip: {fileID: 8300000, guid: 33dd211ebe78acb4b86ee90c3400fa48, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &2034682966
 Transform:

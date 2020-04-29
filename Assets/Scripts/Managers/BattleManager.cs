@@ -50,14 +50,14 @@ public class BattleManager : MonoBehaviour
         BattleGameState = MainGameManager.gameState;
         hasAttacked = false;
 
-
+        ClearSelection();
 
 
     }
 
     void Update()
     {
-
+        Selection();
         switch (BattleGameState)
         {
           
@@ -72,7 +72,7 @@ public class BattleManager : MonoBehaviour
             
         }
 
-        Selection();
+        
 
 
 
@@ -82,16 +82,17 @@ public class BattleManager : MonoBehaviour
 
     {
 
-
+        
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-
+            
             Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit rhInfo;
             //bool didHit = Physics.Raycast(toMouse, out rhInfo, 500.0f);
             if (Physics.Raycast(toMouse, out rhInfo, rayLength, layermask))
             {
-
+                
+    
                 Selectedtotem = rhInfo.collider.gameObject.GetComponent<Totem>();
                 Debug.Log(rhInfo.collider.name);
                 FindObjectOfType<SoundManager>().Play("SelectAudio");
@@ -103,13 +104,16 @@ public class BattleManager : MonoBehaviour
                         {
                             case WhatisTotem.O:
                                 ActiveTotem = Selectedtotem;
+                                
                                 ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
-                                P1battleHUD.SetHUD(ActiveTotem);
+                                CurrbattleHUD.SetHUD(ActiveTotem);
+
                                 break;
                             case WhatisTotem.X:
                                 EnemyTotem = Selectedtotem;
+                                
                                 EnemyTotem.GetComponentInChildren<Renderer>().material = EneMat;
-                                P2battleHUD.SetHUD(EnemyTotem);
+                                EnebattleHUD.SetHUD(EnemyTotem);
                                 break;
 
 
@@ -122,21 +126,23 @@ public class BattleManager : MonoBehaviour
                     case GameState.PLAYER_2_TURN:
                         switch (Selectedtotem.totemIs)
                         {
+
                             case WhatisTotem.X:
                                 ActiveTotem = Selectedtotem;
+                                
                                 ActiveTotem.GetComponentInChildren<Renderer>().material = HighlightedMat;
-                                P2battleHUD.SetHUD(ActiveTotem);
+                                CurrbattleHUD.SetHUD(ActiveTotem);
                                 break;
                             case WhatisTotem.O:
                                 EnemyTotem = Selectedtotem;
                                 EnemyTotem.GetComponentInChildren<Renderer>().material = EneMat;
-                                P1battleHUD.SetHUD(EnemyTotem);
+                                EnebattleHUD.SetHUD(EnemyTotem);
                                 break;
                             default:
                                 break;
                         }
 
-
+                       
 
                         break;
 
@@ -152,7 +158,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-
+                ClearOtherSelection();
                 ClearSelection();
                 Debug.Log("Nothing");
             }
@@ -191,6 +197,25 @@ public class BattleManager : MonoBehaviour
         EnemyTotem = null;
         ActiveTotem = null;
         Selectedtotem = null;
+        EnebattleHUD.ResetHUD();
+        CurrbattleHUD.ResetHUD();
+        ClearOtherSelection();
+    }
+    public void ClearOtherSelection()
+    {
+        Totems = GameObject.FindGameObjectsWithTag("Totem");
+
+        foreach (GameObject Totem in Totems)
+        {
+            if (Totem != ActiveTotem || EnemyTotem)
+            {
+                Totem.GetComponentInChildren<Renderer>().material = Totem.GetComponentInChildren<Totem>().TotemMat;
+            }
+            
+          
+        }
+       
+
     }
 
     public void OnAttackButton()
@@ -199,8 +224,8 @@ public class BattleManager : MonoBehaviour
 
         if (ActiveTotem.hasAttack == false)
         {
-            EnebattleHUD.SetHUD(EnemyTotem);
             ActiveTotem.AttackTotem();
+            EnebattleHUD.SetHUD(EnemyTotem);         
             Acttotemelementtype = ActiveTotem.TotemElementType;
             Enetotemelementtype = EnemyTotem.TotemElementType;
             switch (Acttotemelementtype)
@@ -216,6 +241,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeDamage();
+                      
                     }
                     break;
                 case Element.Water:
@@ -224,11 +250,13 @@ public class BattleManager : MonoBehaviour
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeCritDamage();
                         EnebattleHUD.SetHUD(EnemyTotem);
+
                     }
                     else
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeDamage();
+                       
                     }
                     break;
                 case Element.Earth:
@@ -242,6 +270,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeDamage();
+                        
                     }
                     break;
                 case Element.Air:
@@ -255,7 +284,7 @@ public class BattleManager : MonoBehaviour
                     {
                         PlayAttackSound(ActiveTotem);
                         EnemyTotem.TakeDamage();
-
+                        
                     }
                     break;
                 default:

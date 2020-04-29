@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BattleHUD : MonoBehaviour
 {
-
+    public BattleHUD HUD;
     public Text totemName;
     public Slider hpSlider;
     public Text DmgText;
@@ -19,10 +19,7 @@ public class BattleHUD : MonoBehaviour
     public Image WaterPanel;
     public Image AirPanel;
     public Image TotemPanel;
-    public Image P1_Icon;
-    public Image P2_Icon;
-    public Image P1_TotIcon;
-    public Image P2_TotIcon;
+  
 
     public Text CombatText;
 
@@ -36,21 +33,9 @@ public class BattleHUD : MonoBehaviour
 
     public void ResetHUD()
     {
-
-        totemName.text = null;
-        hpSlider.maxValue = 5;
-        hpSlider.value = 5;
+        HUD.gameObject.SetActive(false);
         DmgText.text = null;
-        DefText.text = null; 
-        Str.text = null;
-        Wkn.text = null;
-        //AtkButton.enabled = false;
-        //DefButton.enabled = true;
-        EarthPanel.enabled = false;
-        FirePanel.enabled = false;
-        WaterPanel.enabled = false;
-        AirPanel.enabled = false;
-        TotemPanel.enabled = true;
+        DefText.text = null;
 
 
 
@@ -58,15 +43,17 @@ public class BattleHUD : MonoBehaviour
 
     public void SetHUD(Totem totem)
     {
+        Debug.Log("HUD Active");
+        HUD.gameObject.SetActive(true);
         totemName.text = totem.totemName;
+        SetHP(totem.totemCurrentHP);
         hpSlider.maxValue = totem.totemMaxHP;
         hpSlider.value = totem.totemCurrentHP;
         DmgText.text = totem.totemDamage.ToString();
         DefText.text = totem.totemCurrentDefence.ToString();
         Str.text = totem.Strength;
         Wkn.text = totem.Weakness;
-        AtkButton.enabled = false;
-        DefButton.enabled = true;
+      
         switch (totem.TotemElementType)
         {
             case Element.Fire:
@@ -107,8 +94,43 @@ public class BattleHUD : MonoBehaviour
 
         }
 
-       
-       
+        switch (GameState)
+        {
+            
+            case GameState.PLAYER_1_TURN:
+                switch (totem.totemIs)
+                {
+                    case WhatisTotem.X:
+                        AtkButton.enabled = false;
+                        DefButton.enabled = false;
+                        break;
+                    case WhatisTotem.O:
+                        AtkButton.enabled = true;
+                        DefButton.enabled = true;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case GameState.PLAYER_2_TURN:
+                switch (totem.totemIs)
+                {
+                    case WhatisTotem.X:
+                        AtkButton.enabled = true;
+                        DefButton.enabled = true;
+                        break;
+                    case WhatisTotem.O:
+                        AtkButton.enabled = false;
+                        DefButton.enabled = false;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 
   
