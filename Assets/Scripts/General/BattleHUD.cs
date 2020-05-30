@@ -43,11 +43,12 @@ public class BattleHUD : MonoBehaviour
 
     public void SetHUD(Totem totem)
     {
-        Debug.Log("HUD Active");
+        Debug.Log("HUD" + totem + " Active");
         HUD.gameObject.SetActive(true);
         totemName.text = totem.totemName;
         SetHP(totem.totemCurrentHP);
         hpSlider.maxValue = totem.totemMaxHP;
+        SetHP(totem.totemCurrentHP);
         hpSlider.value = totem.totemCurrentHP;
         DmgText.text = totem.totemDamage.ToString();
         DefText.text = totem.totemCurrentDefence.ToString();

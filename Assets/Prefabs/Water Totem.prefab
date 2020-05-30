@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
+  - {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   TotemElementType: 1
   Player1: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
   Player2: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
-  TotemMat: {fileID: 2100000, guid: 6957675303a500c4fb4aef5fa26e8df8, type: 2}
+  TotemMat: {fileID: 2100000, guid: 79a0732119665f347b6124b310e5ab0d, type: 2}
   totemName: Fountain Totem
   totemMaxHP: 8
   totemCurrentHP: 5
@@ -115,7 +115,7 @@ MonoBehaviour:
   totemsquarenumber: {fileID: 0}
   TotemTileNumber: 8
   Tiles: []
-  totemIs: 1
+  totemIs: 0
 --- !u!65 &7253107912470725986
 BoxCollider:
   m_ObjectHideFlags: 0
