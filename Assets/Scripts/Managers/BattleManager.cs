@@ -176,7 +176,7 @@ public class BattleManager : MonoBehaviour
     {
         postion.y = 30f;
         var go = Instantiate(FloatingDMGText, postion, Quaternion.Euler(new Vector3(45, -90, 0)));
-        go.GetComponent<TextMesh>().text = "- " + EnemyTotem.totemCurrentDamage.ToString() + " Hp";
+        go.GetComponent<TextMesh>().text = "- " + ActiveTotem.totemCurrentDamage.ToString() + " Hp";
     }
 
     void ShowDEFFloatingText(Vector3 postion)
@@ -194,11 +194,12 @@ public class BattleManager : MonoBehaviour
         {
             Totem.GetComponentInChildren<Renderer>().material = Totem.GetComponentInChildren<Totem>().TotemMat;
         }
+        EnebattleHUD.ResetHUD(EnemyTotem );
+        CurrbattleHUD.ResetHUD(ActiveTotem);
         EnemyTotem = null;
         ActiveTotem = null;
         Selectedtotem = null;
-        EnebattleHUD.ResetHUD();
-        CurrbattleHUD.ResetHUD();
+       
         ClearOtherSelection();
     }
     public void ClearOtherSelection()
@@ -220,71 +221,70 @@ public class BattleManager : MonoBehaviour
 
     public void OnAttackButton()
     {
-
-
+        if (EnemyTotem == null)
+            return;
+       
         if (ActiveTotem.hasAttack == false)
         {
-            ActiveTotem.AttackTotem();
-            EnebattleHUD.SetHUD(EnemyTotem);         
-            Acttotemelementtype = ActiveTotem.TotemElementType;
-            Enetotemelementtype = EnemyTotem.TotemElementType;
-            switch (Acttotemelementtype)
+           
+            EnebattleHUD.SetHUD(EnemyTotem);        
+            switch (ActiveTotem.TotemElementType)
             {
                 case Element.Fire:
-                    if (Enetotemelementtype == Element.Earth)
+                    if (EnemyTotem.TotemElementType == Element.Earth)
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeCritDamage();
+                        EnemyTotem.TakeCritDamage(ActiveTotem,EnemyTotem);
                         EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeDamage();
-                      
+                        EnemyTotem.TakeDamage(ActiveTotem, EnemyTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     break;
                 case Element.Water:
-                    if (Enetotemelementtype == Element.Fire)
+                    if (EnemyTotem.TotemElementType == Element.Fire)
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeCritDamage();
+                        EnemyTotem.TakeCritDamage(ActiveTotem, EnemyTotem);
                         EnebattleHUD.SetHUD(EnemyTotem);
 
                     }
                     else
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeDamage();
-                       
+                        EnemyTotem.TakeDamage(ActiveTotem, EnemyTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     break;
                 case Element.Earth:
-                    if (Enetotemelementtype == Element.Water)
+                    if (EnemyTotem.TotemElementType == Element.Water)
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeCritDamage();
+                        EnemyTotem.TakeCritDamage(ActiveTotem, EnemyTotem);
                         EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeDamage();
-                        
+                        EnemyTotem.TakeDamage(ActiveTotem, EnemyTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     break;
                 case Element.Air:
-                    if (Enetotemelementtype == Element.Air)
+                    if (EnemyTotem.TotemElementType == Element.Air)
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeCritDamage();
+                        EnemyTotem.TakeCritDamage(ActiveTotem, EnemyTotem);
                         EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     else
                     {
                         PlayAttackSound(ActiveTotem);
-                        EnemyTotem.TakeDamage();
-                        
+                        EnemyTotem.TakeDamage(ActiveTotem, EnemyTotem);
+                        EnebattleHUD.SetHUD(EnemyTotem);
                     }
                     break;
                 default:
@@ -295,13 +295,13 @@ public class BattleManager : MonoBehaviour
             ShowDMGFloatingText(EnemyTotem.transform.position);
             if (EnemyTotem.IsDead)
             {
-                EnebattleHUD.ResetHUD();
-
+                EnebattleHUD.ResetHUD(EnemyTotem);
+                EnemyTotem = null; 
             }
 
             else
                 EnebattleHUD.SetHUD(EnemyTotem);
-            hasAttacked = true;
+            
             return;
         }
 
@@ -319,7 +319,7 @@ public class BattleManager : MonoBehaviour
 
         if (ActiveTotem.isDefending == false)
         {
-            ActiveTotem.TotemDefend();
+            ActiveTotem.TotemDefend(ActiveTotem);
             CurrbattleHUD.SetHUD(ActiveTotem);
             ShowDEFFloatingText(ActiveTotem.transform.position);
             if (ActiveTotem.totemCurrentHP <= 0)
@@ -359,6 +359,8 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+
 }
 
 

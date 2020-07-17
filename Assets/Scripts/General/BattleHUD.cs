@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +9,16 @@ public class BattleHUD : MonoBehaviour
 {
     public BattleHUD HUD;
     public Text totemName;
-    public Slider hpSlider;
+    public Text HealthText;
     public Text DmgText;
     public Text DefText;
-    public Text Wkn;
-    public Text Str;
 
-    public Image EarthPanel;
-    public Image FirePanel;
-    public Image WaterPanel;
-    public Image AirPanel;
-    public Image TotemPanel;
+
+    public GameObject EarthPanel;
+    public GameObject FirePanel;
+    public GameObject WaterPanel;
+    public GameObject AirPanel;
+    public GameObject TotemPanel;
   
 
     public Text CombatText;
@@ -26,17 +26,18 @@ public class BattleHUD : MonoBehaviour
     public Button AtkButton;
     public Button DefButton;
 
-    
+    public bool IsP1;
 
-    GameState GameState;
+    public GameState GameState;
+    public GameManager MainManager;
 
-
-    public void ResetHUD()
+    public void ResetHUD(Totem totem)
     {
         HUD.gameObject.SetActive(false);
-        DmgText.text = null;
-        DefText.text = null;
+        //DmgText.text = null;
+        //DefText.text = null;
 
+        
 
 
     }
@@ -47,104 +48,97 @@ public class BattleHUD : MonoBehaviour
         HUD.gameObject.SetActive(true);
         totemName.text = totem.totemName;
         SetHP(totem.totemCurrentHP);
-        hpSlider.maxValue = totem.totemMaxHP;
-        SetHP(totem.totemCurrentHP);
-        hpSlider.value = totem.totemCurrentHP;
         DmgText.text = totem.totemDamage.ToString();
         DefText.text = totem.totemCurrentDefence.ToString();
-        Str.text = totem.Strength;
-        Wkn.text = totem.Weakness;
-      
+        ActionHUDReset(totem);
+
+
         switch (totem.TotemElementType)
         {
             case Element.Fire:
-                EarthPanel.enabled = false;
-                FirePanel.enabled = true;
-                WaterPanel.enabled = false;
-                AirPanel.enabled = false;
-                TotemPanel.enabled = false;
+                EarthPanel.active = false;
+                FirePanel.active = true;
+                WaterPanel.active = false;
+                AirPanel.active = false;
+                TotemPanel.active = false;
                 break;
             case Element.Water:
-                EarthPanel.enabled = false;
-                FirePanel.enabled = false;
-                WaterPanel.enabled = true;
-                AirPanel.enabled = false;
-                TotemPanel.enabled = false;
+                EarthPanel.active = false;
+                FirePanel.active = false;
+                WaterPanel.active = true;
+                AirPanel.active = false;
+                TotemPanel.active = false;
                 break;
             case Element.Earth:
-                EarthPanel.enabled = true;
-                FirePanel.enabled = false;
-                WaterPanel.enabled = false;
-                AirPanel.enabled = false;
-                TotemPanel.enabled = false;
+                EarthPanel.active = true;
+                FirePanel.active = false;
+                WaterPanel.active = false;
+                AirPanel.active = false;
+                TotemPanel.active = false;
                 break;
             case Element.Air:
-                EarthPanel.enabled = false;
-                FirePanel.enabled = false;
-                WaterPanel.enabled = false;
-                AirPanel.enabled = true;
-                TotemPanel.enabled = false;
+                EarthPanel.active = false;
+                FirePanel.active = false;
+                WaterPanel.active = false;
+                AirPanel.active = true;
+                TotemPanel.active = false;
                 break;
             default:
-                EarthPanel.enabled = false;
-                FirePanel.enabled = false;
-                WaterPanel.enabled = false;
-                AirPanel.enabled = false;
-                TotemPanel.enabled = true;
+                EarthPanel.active = false;
+                FirePanel.active = false;
+                WaterPanel.active = false;
+                AirPanel.active = false;
+                TotemPanel.active = true;
                 break;
 
         }
 
-        switch (GameState)
+        
+    }
+   
+
+    public void ActionHUDReset(Totem totem)
+    {
+        
+        GameState = MainManager.gameState;
+        if (totem.totemIs == WhatisTotem.O)
         {
-            
-            case GameState.PLAYER_1_TURN:
-                switch (totem.totemIs)
-                {
-                    case WhatisTotem.X:
-                        AtkButton.enabled = false;
-                        DefButton.enabled = false;
-                        break;
-                    case WhatisTotem.O:
-                        AtkButton.enabled = true;
-                        DefButton.enabled = true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case GameState.PLAYER_2_TURN:
-                switch (totem.totemIs)
-                {
-                    case WhatisTotem.X:
-                        AtkButton.enabled = true;
-                        DefButton.enabled = true;
-                        break;
-                    case WhatisTotem.O:
-                        AtkButton.enabled = false;
-                        DefButton.enabled = false;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
+            switch (GameState)
+            {
+                case GameState.PLAYER_1_TURN:
+                    AtkButton.enabled = true;
+                    DefButton.enabled = true;
+                    break;
+                case GameState.PLAYER_2_TURN:
+                    AtkButton.enabled = false;
+                    DefButton.enabled = false;
+                    break;
+            }
         }
+        if (totem.totemIs == WhatisTotem.X)
+        {
+            switch (GameState)
+            {
+                case GameState.PLAYER_1_TURN:
+                    AtkButton.enabled = false;
+                    DefButton.enabled = false;
+                    break;
+                case GameState.PLAYER_2_TURN:
+                    AtkButton.enabled = true;
+                    DefButton.enabled = true;
+                    break;
+            }
+        }
+
 
     }
 
-  
 
-
-    
-
-    
     public void SetHP (int hp)
     {
 
 
-        hpSlider.value = hp;
+        HealthText.text = hp.ToString();
 
 
     }

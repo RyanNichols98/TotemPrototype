@@ -3,14 +3,20 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public enum GameState { START, PLAYER_1_TURN, PLAYER_2_TURN, PAUSED, END }
 
 public class GameManager : MonoBehaviour
 {
 
+    //Player Stats
+    public PlayerStats P1_Stats;
+    public PlayerStats P2_Stats;
+
     //Game states
     public GameState gameState;
+
     //Battle Manager
     public BattleManager MainBattleManger;
 
@@ -45,7 +51,8 @@ public class GameManager : MonoBehaviour
     public Image P2_Icon;
 
     //BattleHUD
-    public BattleHUD battleHUD;
+    public BattleHUD p1battleHUD;
+    public BattleHUD p2battleHUD;
 
 
 
@@ -62,9 +69,10 @@ public class GameManager : MonoBehaviour
     int ClickCount = 0;
     void Start()
     {
-        
 
-        
+
+                P1_Stats.ResetAP();
+                P2_Stats.ResetAP();
                 turnCounter = 1;
                 gameState = GameState.PLAYER_1_TURN;
                 MainBattleManger.setGameState();
@@ -79,7 +87,7 @@ public class GameManager : MonoBehaviour
         SetTurnText();
         //Check for a winner
 
-       
+     
     }
 
 
@@ -110,7 +118,7 @@ public class GameManager : MonoBehaviour
 
             totemElementType = ElementType;
 
-            Debug.Log(SquareNumber + " is set");
+            UnityEngine.Debug.Log(SquareNumber + " is set");
             TileNumber = SquareNumber;
            
             //spawn totem
@@ -124,7 +132,16 @@ public class GameManager : MonoBehaviour
 
             //Next player turn
 
-           
+            switch (gameState)
+            {
+
+                case GameState.PLAYER_1_TURN:
+                    P1_Stats.UseAP();
+                    break;
+                case GameState.PLAYER_2_TURN:
+                    P2_Stats.UseAP();
+                    break;
+            }
 
 
 
@@ -356,10 +373,12 @@ public class GameManager : MonoBehaviour
         {
             
             case GameState.PLAYER_1_TURN:               
-                gameState = GameState.PLAYER_2_TURN; 
+                gameState = GameState.PLAYER_2_TURN;
+                P2_Stats.ResetAP();
                 break;
             case GameState.PLAYER_2_TURN:
-                gameState = GameState.PLAYER_1_TURN;                            
+                gameState = GameState.PLAYER_1_TURN;
+                P1_Stats.ResetAP();
                 break;
             case GameState.END:
                 SceneManager.LoadScene(1);

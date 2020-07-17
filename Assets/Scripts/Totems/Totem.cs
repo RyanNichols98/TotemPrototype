@@ -97,36 +97,77 @@ public class Totem : MonoBehaviour
             return;
 
     }
-   public void TakeDamage()
+   public void TakeDamage(Totem totemA, Totem totemB)
     {
-        totemCurrentDamage = totemDamage;
-        if (isDefending == true)
-        {
-            totemCurrentHP += totemCurrentDefence;
-            totemCurrentHP -= totemDamage;
-            totemCurrentDefence = 0;
-            isDefending = false;
-        }
-        else if (isDefending == false)
+        if (totemA.hasAttack == false)
         {
 
-            totemCurrentHP -= totemDamage;
+
+            totemA.totemCurrentDamage = totemA.totemDamage;
+            if (totemB.isDefending == true)
+            {
+              
+                totemB.totemCurrentDefence -= totemA.totemDamage;
+                totemB.totemCurrentDefence = 0;
+                totemB.isDefending = false;
+            }
+            else if (totemB.isDefending == false)
+            {
+
+                totemB.totemCurrentHP -= totemA.totemDamage;
+
+            }
+
+            Debug.Log(totemName);
+            SetTotemHealth();
+
+            totemA.HasTotemAttacked(totemA);
+        }
+
+        else
+        {
+
+            Debug.Log(totemName + " has already attacked!");
 
         }
-       
-        Debug.Log(totemName);
-        SetTotemHealth();
-        
 
     }
-   public  void TakeCritDamage()
+   public  void TakeCritDamage(Totem totemA, Totem totemB)
     {
-        
-            
-            totemCurrentHP -= totemCurrentDamage = totemCritDamage + totemDamage;
-        totemCurrentDefence = 0;
-        isDefending = false;
-        
+        if (totemA.hasAttack == false)
+        {
+
+
+            totemA.totemCurrentDamage = totemA.totemDamage;
+            if (totemB.isDefending == true)
+            {
+                totemB.totemCurrentDefence -= totemA.totemDamage;
+                totemB.totemCurrentDefence = 0;
+                totemB.isDefending = false;
+            }
+            else if (totemB.isDefending == false)
+            {
+
+                totemB.totemCurrentHP -= totemA.totemCurrentDamage = totemA.totemCritDamage + totemA.totemDamage;
+                totemB.totemCurrentDefence = 0;
+                totemB.isDefending = false;
+
+
+            }
+
+            Debug.Log(totemName);
+            SetTotemHealth();
+            totemA.HasTotemAttacked(totemA);
+
+        }
+
+        else
+        {
+
+            Debug.Log(totemName + " has already attacked!");
+
+        }
+
        
         
 
@@ -135,40 +176,15 @@ public class Totem : MonoBehaviour
        
    }
   
-    public void AttackTotem()
+    public void HasTotemAttacked(Totem totemA)
     {
-            hasAttack = true;
-
-        switch (Battlestate)
+        if (totemA.hasAttack == false)
         {
-            
-            case GameState.PLAYER_1_TURN:
-                if (totemIs == WhatisTotem.O)
-                {
-
-                    hasAttack = true;
-                }
-                else if(totemIs == WhatisTotem.X)
-                {
-
-                    hasAttack = false;
-                }
-                break;
-            case GameState.PLAYER_2_TURN:
-                if (totemIs == WhatisTotem.X)
-                {
-
-                    hasAttack = true;
-                }
-                else if (totemIs == WhatisTotem.O)
-                {
-
-                    hasAttack = false;
-                }
-                break;
-        
+            totemA.hasAttack = true;
         }
-       
+
+        else
+            return;
     }
 
    
@@ -177,16 +193,15 @@ public class Totem : MonoBehaviour
 
 
     
-    public void TotemDefend()
+    public void TotemDefend(Totem totemA)
     {
-        if (isDefending == false)
+        if (totemA.isDefending == false)
         {
-            totemCurrentDefence += totemDefence;
-            totemCurrentHP += totemCurrentDefence;
-            isDefending = true;
+            totemA.totemCurrentDefence += totemA.totemDefence;
+            totemA.isDefending = true;
             FindObjectOfType<SoundManager>().Play("TotemDefAudio");
         }
-        else if (isDefending == true)
+        else if (totemA.isDefending == true)
             return;
 
 
